@@ -12,14 +12,24 @@
             -o-background-size: cover;
             background-size: cover;
         }
-        a {
-            display: block;
-            width: 100vh;
+        .container {
+            display: flex;
+            align-items: center;
             height: 100vh;
         }
+        a {
+            text-align: center;
+            display: block;
+            width: 100%;
+        }
+        img { max-width: 75%; flex: 1; display: inline; }
     </style>
 </head>
 <body>
-    <a href="https://www.facebook.com/josephmcdademusic"></a>
+    <div class="container">
+        <a href="https://www.facebook.com/josephmcdademusic">
+            <img src="joseph-mcdade-logo.png" alt="Joseph McDade - Æther" />
+        </a>
+    </div>
 </body>
 </html>
