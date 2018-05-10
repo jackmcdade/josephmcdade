@@ -653,6 +653,11 @@ a {
   color: #ffffff;
 }
 
+.text-faint,
+.hover\:text-faint:hover {
+  color: rgba(255, 255, 255, .2);
+}
+
 .leading-none {
   line-height: 1;
 }
@@ -837,6 +842,11 @@ a {
   background-color: #ffffff;
 }
 
+.bg-faint,
+.hover\:bg-faint:hover {
+  background-color: rgba(255, 255, 255, .2);
+}
+
 .bg-bottom {
   background-position: bottom;
 }
@@ -1012,6 +1022,11 @@ a {
 .border-white,
 .hover\:border-white:hover {
   border-color: #ffffff;
+}
+
+.border-faint,
+.hover\:border-faint:hover {
+  border-color: rgba(255, 255, 255, .2);
 }
 
 .border-dashed {
@@ -2932,6 +2947,11 @@ a {
     color: #ffffff;
   }
 
+  .sm\:text-faint,
+  .sm\:hover\:text-faint:hover {
+    color: rgba(255, 255, 255, .2);
+  }
+
   .sm\:leading-none {
     line-height: 1;
   }
@@ -3116,6 +3136,11 @@ a {
     background-color: #ffffff;
   }
 
+  .sm\:bg-faint,
+  .sm\:hover\:bg-faint:hover {
+    background-color: rgba(255, 255, 255, .2);
+  }
+
   .sm\:bg-bottom {
     background-position: bottom;
   }
@@ -3291,6 +3316,11 @@ a {
   .sm\:border-white,
   .sm\:hover\:border-white:hover {
     border-color: #ffffff;
+  }
+
+  .sm\:border-faint,
+  .sm\:hover\:border-faint:hover {
+    border-color: rgba(255, 255, 255, .2);
   }
 
   .sm\:border-dashed {
@@ -5206,6 +5236,11 @@ a {
     color: #ffffff;
   }
 
+  .md\:text-faint,
+  .md\:hover\:text-faint:hover {
+    color: rgba(255, 255, 255, .2);
+  }
+
   .md\:leading-none {
     line-height: 1;
   }
@@ -5390,6 +5425,11 @@ a {
     background-color: #ffffff;
   }
 
+  .md\:bg-faint,
+  .md\:hover\:bg-faint:hover {
+    background-color: rgba(255, 255, 255, .2);
+  }
+
   .md\:bg-bottom {
     background-position: bottom;
   }
@@ -5565,6 +5605,11 @@ a {
   .md\:border-white,
   .md\:hover\:border-white:hover {
     border-color: #ffffff;
+  }
+
+  .md\:border-faint,
+  .md\:hover\:border-faint:hover {
+    border-color: rgba(255, 255, 255, .2);
   }
 
   .md\:border-dashed {
@@ -7480,6 +7525,11 @@ a {
     color: #ffffff;
   }
 
+  .lg\:text-faint,
+  .lg\:hover\:text-faint:hover {
+    color: rgba(255, 255, 255, .2);
+  }
+
   .lg\:leading-none {
     line-height: 1;
   }
@@ -7664,6 +7714,11 @@ a {
     background-color: #ffffff;
   }
 
+  .lg\:bg-faint,
+  .lg\:hover\:bg-faint:hover {
+    background-color: rgba(255, 255, 255, .2);
+  }
+
   .lg\:bg-bottom {
     background-position: bottom;
   }
@@ -7839,6 +7894,11 @@ a {
   .lg\:border-white,
   .lg\:hover\:border-white:hover {
     border-color: #ffffff;
+  }
+
+  .lg\:border-faint,
+  .lg\:hover\:border-faint:hover {
+    border-color: rgba(255, 255, 255, .2);
   }
 
   .lg\:border-dashed {
@@ -9754,6 +9814,11 @@ a {
     color: #ffffff;
   }
 
+  .xl\:text-faint,
+  .xl\:hover\:text-faint:hover {
+    color: rgba(255, 255, 255, .2);
+  }
+
   .xl\:leading-none {
     line-height: 1;
   }
@@ -9938,6 +10003,11 @@ a {
     background-color: #ffffff;
   }
 
+  .xl\:bg-faint,
+  .xl\:hover\:bg-faint:hover {
+    background-color: rgba(255, 255, 255, .2);
+  }
+
   .xl\:bg-bottom {
     background-position: bottom;
   }
@@ -10113,6 +10183,11 @@ a {
   .xl\:border-white,
   .xl\:hover\:border-white:hover {
     border-color: #ffffff;
+  }
+
+  .xl\:border-faint,
+  .xl\:hover\:border-faint:hover {
+    border-color: rgba(255, 255, 255, .2);
   }
 
   .xl\:border-dashed {

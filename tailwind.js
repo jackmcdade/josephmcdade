@@ -7,6 +7,7 @@ var colors = {
     'yellow':        '#FFFEBE',
     'yellow-dark':   '#F7E255',
     'white':         '#ffffff',
+    'faint':         'rgba(255,255,255,.2)'
 }
 
 var units = {
