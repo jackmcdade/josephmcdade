@@ -1,0 +1,4 @@
+title: Stuff
+route: '/stuff/{slug}'
+order: numeric
+fieldset: stuff

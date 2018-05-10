@@ -1,0 +1,4 @@
+title: Television
+route: '/tv/{slug}'
+order: numeric
+fieldset: show

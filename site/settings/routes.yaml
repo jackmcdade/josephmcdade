@@ -1,0 +1,4 @@
+collections:
+  stuff: '/stuff/{slug}'
+taxonomies:
+  category: '/category/{term}'
