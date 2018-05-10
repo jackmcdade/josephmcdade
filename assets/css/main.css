@@ -660,7 +660,7 @@ a {
 
 .text-darken,
 .hover\:text-darken:hover {
-  color: rgba(0, 0, 0, .2);
+  color: rgba(0, 0, 0, .5);
 }
 
 .leading-none {
@@ -854,7 +854,7 @@ a {
 
 .bg-darken,
 .hover\:bg-darken:hover {
-  background-color: rgba(0, 0, 0, .2);
+  background-color: rgba(0, 0, 0, .5);
 }
 
 .bg-bottom {
@@ -1041,7 +1041,7 @@ a {
 
 .border-darken,
 .hover\:border-darken:hover {
-  border-color: rgba(0, 0, 0, .2);
+  border-color: rgba(0, 0, 0, .5);
 }
 
 .border-dashed {
@@ -2969,7 +2969,7 @@ a {
 
   .sm\:text-darken,
   .sm\:hover\:text-darken:hover {
-    color: rgba(0, 0, 0, .2);
+    color: rgba(0, 0, 0, .5);
   }
 
   .sm\:leading-none {
@@ -3163,7 +3163,7 @@ a {
 
   .sm\:bg-darken,
   .sm\:hover\:bg-darken:hover {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .5);
   }
 
   .sm\:bg-bottom {
@@ -3350,7 +3350,7 @@ a {
 
   .sm\:border-darken,
   .sm\:hover\:border-darken:hover {
-    border-color: rgba(0, 0, 0, .2);
+    border-color: rgba(0, 0, 0, .5);
   }
 
   .sm\:border-dashed {
@@ -5273,7 +5273,7 @@ a {
 
   .md\:text-darken,
   .md\:hover\:text-darken:hover {
-    color: rgba(0, 0, 0, .2);
+    color: rgba(0, 0, 0, .5);
   }
 
   .md\:leading-none {
@@ -5467,7 +5467,7 @@ a {
 
   .md\:bg-darken,
   .md\:hover\:bg-darken:hover {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .5);
   }
 
   .md\:bg-bottom {
@@ -5654,7 +5654,7 @@ a {
 
   .md\:border-darken,
   .md\:hover\:border-darken:hover {
-    border-color: rgba(0, 0, 0, .2);
+    border-color: rgba(0, 0, 0, .5);
   }
 
   .md\:border-dashed {
@@ -7577,7 +7577,7 @@ a {
 
   .lg\:text-darken,
   .lg\:hover\:text-darken:hover {
-    color: rgba(0, 0, 0, .2);
+    color: rgba(0, 0, 0, .5);
   }
 
   .lg\:leading-none {
@@ -7771,7 +7771,7 @@ a {
 
   .lg\:bg-darken,
   .lg\:hover\:bg-darken:hover {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .5);
   }
 
   .lg\:bg-bottom {
@@ -7958,7 +7958,7 @@ a {
 
   .lg\:border-darken,
   .lg\:hover\:border-darken:hover {
-    border-color: rgba(0, 0, 0, .2);
+    border-color: rgba(0, 0, 0, .5);
   }
 
   .lg\:border-dashed {
@@ -9881,7 +9881,7 @@ a {
 
   .xl\:text-darken,
   .xl\:hover\:text-darken:hover {
-    color: rgba(0, 0, 0, .2);
+    color: rgba(0, 0, 0, .5);
   }
 
   .xl\:leading-none {
@@ -10075,7 +10075,7 @@ a {
 
   .xl\:bg-darken,
   .xl\:hover\:bg-darken:hover {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .5);
   }
 
   .xl\:bg-bottom {
@@ -10262,7 +10262,7 @@ a {
 
   .xl\:border-darken,
   .xl\:hover\:border-darken:hover {
-    border-color: rgba(0, 0, 0, .2);
+    border-color: rgba(0, 0, 0, .5);
   }
 
   .xl\:border-dashed {
