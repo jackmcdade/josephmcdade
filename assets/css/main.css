@@ -658,6 +658,11 @@ a {
   color: rgba(255, 255, 255, .2);
 }
 
+.text-darken,
+.hover\:text-darken:hover {
+  color: rgba(0, 0, 0, .2);
+}
+
 .leading-none {
   line-height: 1;
 }
@@ -847,6 +852,11 @@ a {
   background-color: rgba(255, 255, 255, .2);
 }
 
+.bg-darken,
+.hover\:bg-darken:hover {
+  background-color: rgba(0, 0, 0, .2);
+}
+
 .bg-bottom {
   background-position: bottom;
 }
@@ -1027,6 +1037,11 @@ a {
 .border-faint,
 .hover\:border-faint:hover {
   border-color: rgba(255, 255, 255, .2);
+}
+
+.border-darken,
+.hover\:border-darken:hover {
+  border-color: rgba(0, 0, 0, .2);
 }
 
 .border-dashed {
@@ -2952,6 +2967,11 @@ a {
     color: rgba(255, 255, 255, .2);
   }
 
+  .sm\:text-darken,
+  .sm\:hover\:text-darken:hover {
+    color: rgba(0, 0, 0, .2);
+  }
+
   .sm\:leading-none {
     line-height: 1;
   }
@@ -3141,6 +3161,11 @@ a {
     background-color: rgba(255, 255, 255, .2);
   }
 
+  .sm\:bg-darken,
+  .sm\:hover\:bg-darken:hover {
+    background-color: rgba(0, 0, 0, .2);
+  }
+
   .sm\:bg-bottom {
     background-position: bottom;
   }
@@ -3321,6 +3346,11 @@ a {
   .sm\:border-faint,
   .sm\:hover\:border-faint:hover {
     border-color: rgba(255, 255, 255, .2);
+  }
+
+  .sm\:border-darken,
+  .sm\:hover\:border-darken:hover {
+    border-color: rgba(0, 0, 0, .2);
   }
 
   .sm\:border-dashed {
@@ -5241,6 +5271,11 @@ a {
     color: rgba(255, 255, 255, .2);
   }
 
+  .md\:text-darken,
+  .md\:hover\:text-darken:hover {
+    color: rgba(0, 0, 0, .2);
+  }
+
   .md\:leading-none {
     line-height: 1;
   }
@@ -5430,6 +5465,11 @@ a {
     background-color: rgba(255, 255, 255, .2);
   }
 
+  .md\:bg-darken,
+  .md\:hover\:bg-darken:hover {
+    background-color: rgba(0, 0, 0, .2);
+  }
+
   .md\:bg-bottom {
     background-position: bottom;
   }
@@ -5610,6 +5650,11 @@ a {
   .md\:border-faint,
   .md\:hover\:border-faint:hover {
     border-color: rgba(255, 255, 255, .2);
+  }
+
+  .md\:border-darken,
+  .md\:hover\:border-darken:hover {
+    border-color: rgba(0, 0, 0, .2);
   }
 
   .md\:border-dashed {
@@ -7530,6 +7575,11 @@ a {
     color: rgba(255, 255, 255, .2);
   }
 
+  .lg\:text-darken,
+  .lg\:hover\:text-darken:hover {
+    color: rgba(0, 0, 0, .2);
+  }
+
   .lg\:leading-none {
     line-height: 1;
   }
@@ -7719,6 +7769,11 @@ a {
     background-color: rgba(255, 255, 255, .2);
   }
 
+  .lg\:bg-darken,
+  .lg\:hover\:bg-darken:hover {
+    background-color: rgba(0, 0, 0, .2);
+  }
+
   .lg\:bg-bottom {
     background-position: bottom;
   }
@@ -7899,6 +7954,11 @@ a {
   .lg\:border-faint,
   .lg\:hover\:border-faint:hover {
     border-color: rgba(255, 255, 255, .2);
+  }
+
+  .lg\:border-darken,
+  .lg\:hover\:border-darken:hover {
+    border-color: rgba(0, 0, 0, .2);
   }
 
   .lg\:border-dashed {
@@ -9819,6 +9879,11 @@ a {
     color: rgba(255, 255, 255, .2);
   }
 
+  .xl\:text-darken,
+  .xl\:hover\:text-darken:hover {
+    color: rgba(0, 0, 0, .2);
+  }
+
   .xl\:leading-none {
     line-height: 1;
   }
@@ -10008,6 +10073,11 @@ a {
     background-color: rgba(255, 255, 255, .2);
   }
 
+  .xl\:bg-darken,
+  .xl\:hover\:bg-darken:hover {
+    background-color: rgba(0, 0, 0, .2);
+  }
+
   .xl\:bg-bottom {
     background-position: bottom;
   }
@@ -10188,6 +10258,11 @@ a {
   .xl\:border-faint,
   .xl\:hover\:border-faint:hover {
     border-color: rgba(255, 255, 255, .2);
+  }
+
+  .xl\:border-darken,
+  .xl\:hover\:border-darken:hover {
+    border-color: rgba(0, 0, 0, .2);
   }
 
   .xl\:border-dashed {
