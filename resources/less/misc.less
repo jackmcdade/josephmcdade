@@ -1,0 +1,30 @@
+body {
+    @apply .font-sans .text-white;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mix-overlay {
+    mix-blend-mode: overlay;
+}
+
+.mix-exclusion {
+    mix-blend-mode: exclusion;
+}
+
+.mix-multiply {
+    mix-blend-mode: multiply;
+}
+
+.fit-cover { object-fit: cover; }
+
+.hover-lift {
+    @apply .shadow;
+    transition: .12s ease-out;
+    &:hover {
+        transform: translateY(-2px);
+        @apply .shadow-lg;
+    }
+}

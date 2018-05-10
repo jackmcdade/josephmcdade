@@ -1,0 +1,17 @@
+title: Stuff
+fields:
+  photo:
+    type: text
+  genres:
+    type: tags
+  icon:
+    type: radio
+    options:
+      love: love
+      hate: hate
+  review:
+    type: text
+  link:
+    type: text
+  content:
+    type: markdown

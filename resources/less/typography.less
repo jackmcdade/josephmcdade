@@ -1,0 +1,56 @@
+h1, h2, h3, h4 {
+    @apply .antialiased .font-bold;
+}
+
+h1 {
+    @apply .text-6xl .font-serif;
+}
+
+h2 {
+    @apply .text-3xl;
+}
+
+h3 {
+    @apply .text-xl;
+}
+
+h4 {
+    @apply .text-md;
+}
+
+a {
+    @apply .text-pink .no-underline .cursor-pointer;
+
+    &:hover {
+        @apply .text-blue;
+    }
+}
+
+strong, b {
+    font-weight: bold;
+}
+
+.content {
+    @apply .leading-normal;
+
+    p {
+        margin-bottom: 1em;
+        strong { @apply .font-semibold; }
+    }
+}
+
+.meta {
+    @apply .text-xs .text-grey .font-mono .antialiased .uppercase .tracking-wide;
+}
+
+
+.fixed {
+    will-change: transform;
+}
+
+ul {
+    @apply .list-reset;
+    li {
+        @apply .mb-1;
+    }
+}
