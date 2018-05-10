@@ -8,8 +8,7 @@
     <link href="/assets/css/main.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
-<body class="font-sans text-base bg-black">
-    <div id='app' class="bg-cover relative bg-center bg-cover text-white w-full h-screen" style="background-image: url('/assets/img/scatterbrained-bg.jpg');">
+<body class="font-sans text-base relative bg-center bg-cover min-h-screen" style="background-image: url('/assets/img/scatterbrained-bg.jpg');">
         <div class="bg-black absolute pin mix-screen opacity-50 z-10"></div>
         <div id="site" class="p-4 z-20 relative h-full w-full text-center pt-6">
             <div class="max-w-md mx-auto">
@@ -17,15 +16,15 @@
                 <a href="https://itunes.apple.com/us/album/scatterbrained/1383014335">
                     <img src="/assets/img/scatterbrained-cover-art.jpg" class="rounded-lg shadow hover-lift  w-auto h-auto" height="600" width="600" alt="A surreal woodland forest is populated by a plethora of creatures and hot air baloons" title="Scatterbrained Cover Art">
                 </a>
-                <p class="font-heading tracking-wide uppercase mt-4 mb-2">Now Available On</p>
-                <div class="bg-darken inline-block rounded-full py-1 px-2">
+                <p class="font-heading tracking-wide uppercase text-yellow mt-4 mb-2">Now Available On</p>
+                <div class="bg-darken inline-block rounded-full py-1 px-1">
                     {{ links }}
-                        <a href="{{ url }}" class="text-yellow hover:text-yellow-dark mx-2">{{ name }}</a>
+                        <a href="{{ url }}" class="text-white text-sm hover:text-yellow-dark mx-1">{{ name }}</a>
                     {{ /links }}
                 </div>
                 <div class="opacity-75 font-heading tracking-wide uppercase mix-overlay mt-8 text-xs">&copy; {{ now format="Y"}} Joseph McDade</div>
             </div>
-        </div>
+
     </div>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119012602-1"></script>
     <script>
