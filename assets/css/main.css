@@ -534,6 +534,10 @@ a {
   -webkit-box-shadow: 0 15px 40px 15px rgba(0, 0, 0, .6);
           box-shadow: 0 15px 40px 15px rgba(0, 0, 0, .6);
 }
+
+[v-cloak] {
+  display: none;
+}
 /**
 * This injects all of Tailwind's utility classes, generated based on your
 * config file.

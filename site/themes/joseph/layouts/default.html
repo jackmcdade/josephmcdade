@@ -8,9 +8,22 @@
     <link href="/assets/css/main.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
-<body class="font-sans text-base relative bg-center bg-cover min-h-screen" style="background-image: url('/assets/img/scatterbrained-bg.jpg');">
+<body class="bg-black">
+
+    <div class="px-4 py-2 bg-center bg-cover shadow-lg z-10 relative" style="background-image: url('/assets/img/flames-bg.jpg');" id="form">
+        <div class="cursor-pointer flex flex-wrap items-center justify-between text-white" v-if="! showForm">
+            <div><span class="uppercase font-heading">Coming Soon:</span> Free, high quality, creative commons tracks delivered every month. Kinda like <a href="https://unsplash.com" class="text-yellow" rel="noopener" target="_blank">Unsplash</a>, but for music.</div>
+            <button @click="toggleForm" class="bg-darken h-10 px-2 text-white rounded w-full md:w-auto text-center mt-2 md:mt-0 text-sm uppercase hover:text-yellow font-heading md:ml-2">Tell Me When</button>
+        </div>
+        <form action="https://josephmcdade.us19.list-manage.com/subscribe/post?u=8445886eaa2ee949714c109db&amp;id=fcee35aadd" method="post" target="_blank" class="flex justify-center" v-if="showForm" v-cloak>
+            <input type="email" name="EMAIL" placeholder="Email Address" required autofocus class="bg-white border-none px-2 w-1/2 h-10 rounded">
+            <button class="bg-darken text-white h-10 px-2 rounded w-full md:w-auto text-center mt-2 md:mt-0 text-sm uppercase font-heading md:ml-2 hover:text-yellow">Notify Me</button>
+        </form>
+    </div>
+
+    <div class="font-sans text-base relative bg-center bg-cover min-h-screen" style="background-image: url('/assets/img/scatterbrained-bg.jpg');">
         <div class="bg-black absolute pin mix-screen opacity-50 z-10"></div>
-        <div id="site" class="p-2 z-20 relative h-full w-full text-center pt-6">
+        <div id="site" class="p-3 z-20 relative h-full w-full text-center pt-6">
             <div class="max-w-md mx-auto">
                 <div class="mb-6">{{ theme:output src="img/joseph.svg" }}</div>
                 <a href="https://itunes.apple.com/us/album/scatterbrained/1383014335">
@@ -24,8 +37,9 @@
                 </div>
                 <div class="opacity-75 font-heading tracking-wide uppercase mix-overlay my-3 text-xs">&copy; {{ now format="Y"}} Joseph McDade</div>
             </div>
-
+        </div>
     </div>
+    <script src="/assets/js/app.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119012602-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -34,6 +48,5 @@
 
       gtag('config', 'UA-119012602-1');
     </script>
-
 </body>
 </html>

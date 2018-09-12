@@ -106,40 +106,18 @@ module.exports = __webpack_require__(12);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_svg_injector_2__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_svg_injector_2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_svg_injector_2__);
-
 // Imports
 
 
-
-// Instantiations
-// Vue.use(VTooltip)
-
-// Component Registration
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('icon', __webpack_require__(8));
-
-// Directives
-// Vue.directive('tooltip', VTooltip)
-
-// Global Methods
-window.SVGInjector = new __WEBPACK_IMPORTED_MODULE_1_svg_injector_2___default.a();
-
 // Vue instance
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#app',
-
-    data: {},
-
+    el: '#form',
+    data: {
+        showForm: false
+    },
     methods: {
-        grab: function grab(list) {
-            return list[Math.floor(Math.random() * list.length)];
-        },
-        toggleInvoice: function toggleInvoice() {
-            this.invoicing = !this.invoicing;
-        },
-        log: function log(msg) {
-            console.log(msg);
+        toggleForm: function toggleForm() {
+            this.showForm = !this.showForm;
         }
     }
 });
@@ -11251,228 +11229,11 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * SVGInjector v2.1.3 - Fast, caching, dynamic inline SVG DOM injection library
- * https://github.com/flobacher/SVGInjector2
- * forked from:
- * https://github.com/iconic/SVGInjector
- *
- * Copyright (c) 2015 flobacher <flo@digital-fuse.net>
- * @license MIT
- *
- * original Copyright (c) 2014 Waybury <hello@waybury.com>
- * @license MIT
- */
-!function(e,t){"use strict";var r=function(){function r(e){r.instanceCounter++,this.init(e)}var n,i,s,l,a,o,c,u,f,p,d,v,g,m,h,b,y,S,A,C,x,k,N,w,j,E,I,F,T,G,V="http://www.w3.org/2000/svg",O="http://www.w3.org/1999/xlink",q=["sprite"];return s=[],r.instanceCounter=0,r.prototype.init=function(r){r=r||{},n={},o={},o.isLocal="file:"===e.location.protocol,o.hasSvgSupport=t.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure","1.1"),i={count:0,elements:[]},l={},a={},a.evalScripts=r.evalScripts||"always",a.pngFallback=r.pngFallback||!1,a.svgFallbackDir=r.svgFallbackDir||!1,a.onlyInjectVisiblePart=r.onlyInjectVisiblePart||!0,a.keepStylesClass=void 0===r.keepStylesClass?"":r.keepStylesClass,a.spriteClassName=void 0===r.spriteClassName?"sprite":r.spriteClassName,a.spriteClassIdName=void 0===r.spriteClassIdName?"sprite--":r.spriteClassIdName,a.removeStylesClass=void 0===r.removeStylesClass?"icon":r.removeStylesClass,a.removeAllStyles=void 0!==r.removeAllStyles&&r.removeAllStyles,a.fallbackClassName=void 0===r.fallbackClassName?q:r.fallbackClassName,a.prefixStyleTags=void 0===r.prefixStyleTags||r.prefixStyleTags,a.spritesheetURL=void 0!==r.spritesheetURL&&""!==r.spritesheetURL&&r.spritesheetURL,a.prefixFragIdClass=a.spriteClassIdName,a.forceFallbacks=void 0!==r.forceFallbacks&&r.forceFallbacks,a.forceFallbacks&&(o.hasSvgSupport=!1),x(t.querySelector("html"),"no-svg",o.hasSvgSupport),o.hasSvgSupport&&void 0===r.removeStylesClass&&C(a.removeStylesClass)},r.prototype.inject=function(e,t,r){if(void 0!==e.length){var n=0,i=this;I.call(e,function(s){i.injectElement(s,function(i){r&&"function"==typeof r&&r(i),t&&e.length===++n&&t(n)})})}else e?this.injectElement(e,function(n){r&&"function"==typeof r&&r(n),t&&t(1),e=null}):t&&t(0)},G=r.prototype.injectElement=function(e,t){var r,n=e.getAttribute("data-src")||e.getAttribute("src");if(!n){if(!a.spritesheetURL)return;if(""===(r=h(e)))return;n=a.spritesheetURL+"#"+r}e.setAttribute("data-src",n);var s=n.split("#");1===s.length&&s.push("");var l;if(!/\.svg/i.test(n))return void t("Attempted to inject a file with a non-svg extension: "+n);if(!o.hasSvgSupport){var f=e.getAttribute("data-fallback")||e.getAttribute("data-png");return void(f?(e.setAttribute("src",f),t(null)):a.pngFallback?(s.length>1&&s[1]?(l=s[1]+".png",j(a.fallbackClassName)?c(e,s[1],a.fallbackClassName):w(a.fallbackClassName)?a.fallbackClassName(e,s[1]):"string"==typeof a.fallbackClassName?E(e,a.fallbackClassName):e.setAttribute("src",a.pngFallback+"/"+l)):(l=n.split("/").pop().replace(".svg",".png"),e.setAttribute("src",a.pngFallback+"/"+l)),t(null)):t("This browser does not support SVG and no PNG fallback was defined."))}j(a.fallbackClassName)&&u(e,s[1],a.fallbackClassName),-1===i.elements.indexOf(e)&&(i.elements.push(e),A(t,n,e))},r.prototype.getEnv=function(){return o},r.prototype.getConfig=function(){return a},c=function(e,t,r){var n=void 0===r?q:r.slice(0);I.call(n,function(e,r){n[r]=e.replace("%s",t)}),E(e,n)},u=function(e,t,r){r=void 0===r?q.slice(0):r.slice(0);var n,i,s=e.getAttribute("class");void 0!==s&&null!==s&&(i=s.split(" "))&&(I.call(r,function(e){e=e.replace("%s",t),(n=i.indexOf(e))>=0&&(i[n]="")}),e.setAttribute("class",N(i.join(" "))))},p=function(e,t,r,n){var i=0;return e.textContent=e.textContent.replace(/url\(('|")*#.+('|")*(?=\))/g,function(e){return i++,e+"-"+t}),i},f=function(e,t){var r,n,i,s,l,a,o,c,u,f,p,d,v,g,m,h,b=[{def:"linearGradient",attrs:["fill","stroke"]},{def:"radialGradient",attrs:["fill","stroke"]},{def:"clipPath",attrs:["clip-path"]},{def:"mask",attrs:["mask"]},{def:"filter",attrs:["filter"]},{def:"color-profile",attrs:["color-profile"]},{def:"cursor",attrs:["cursor"]},{def:"marker",attrs:["marker","marker-start","marker-mid","marker-end"]}];I.call(b,function(b){for(n=e.querySelectorAll(b.def+"[id]"),s=0,i=n.length;s<i;s++){for(r=n[s].id+"-"+t,c=b.attrs,f=0,u=c.length;f<u;f++)for(l=e.querySelectorAll("["+c[f]+'="url(#'+n[s].id+')"]'),o=0,a=l.length;o<a;o++)l[o].setAttribute(c[f],"url(#"+r+")");for(p=e.querySelectorAll("[*|href]"),g=[],v=0,d=p.length;v<d;v++)p[v].getAttributeNS(O,"href").toString()==="#"+n[s].id&&g.push(p[v]);for(h=0,m=g.length;h<m;h++)g[h].setAttributeNS(O,"href","#"+r);n[s].id=r}})},d=function(e,t,r){var n;void 0===r&&(r=["id","viewBox"]);for(var i=0;i<e.attributes.length;i++)n=e.attributes.item(i),r.indexOf(n.name)<0&&t.setAttribute(n.name,n.value)},v=function(e){var r=t.createElementNS(V,"svg");return I.call(e.childNodes,function(e){r.appendChild(e.cloneNode(!0))}),d(e,r),r},g=function(e,t,r){var n,i,s,l,a,o,c=r.getAttribute("data-src").split("#"),u=e.textContent,f="",p=function(e,t,r){r[t]="."+s+" "+e};if(c.length>1)i=c[1],s=i+"-"+t,n=new RegExp("\\."+i+" ","g"),e.textContent=u.replace(n,"."+s+" ");else{for(l=c[0].split("/"),s=l[l.length-1].replace(".svg","")+"-"+t,n=new RegExp("([\\s\\S]*?){([\\s\\S]*?)}","g");null!==(a=n.exec(u));){o=a[1].trim().split(", "),o.forEach(p);f+=o.join(", ")+"{"+a[2]+"}\n"}e.textContent=f}r.setAttribute("class",r.getAttribute("class")+" "+s)},m=function(e){var t=e.getAttribute("class");return t?t.trim().split(" "):[]},h=function(e){var t=m(e),r="";return I.call(t,function(e){e.indexOf(a.spriteClassIdName)>=0&&(r=e.replace(a.spriteClassIdName,""))}),r},b=function(e,t,r){var n,i,s,l,a,o,c=null,u=!1,f=!1,p=null;if(void 0===r)n=c=t.cloneNode(!0),c.getAttribute("width")||t.getAttribute("width")||(f=!0);else if(!(n=t.getElementById(r)))return;if(s=n.getAttribute("viewBox"),i=s.split(" "),!c){if(n instanceof SVGSymbolElement)c=v(n),f=u=!0;else if(n instanceof SVGViewElement){if(p=null,e.onlyInjectVisiblePart){var d='*[width="'+i[2]+'"][height="'+i[3]+'"]';l={},0===Math.abs(parseInt(i[0]))?d+=":not([x])":(l.x=i[0],d+='[x="'+i[0]+'"]'),0===Math.abs(parseInt(i[1]))?d+=":not([y])":(l.y=i[1],d+='[y="'+i[1]+'"]'),o=t.querySelectorAll(d),o.length,p=o[0]}if(p&&p instanceof SVGSVGElement){c=p.cloneNode(!0);for(var g in l)"width"!==g&&"height"!==g&&c.removeAttribute(g)}else if(p&&p instanceof SVGUseElement){var h=t.getElementById(p.getAttributeNS(O,"href").substr(1));c=v(h),s=h.getAttribute("viewBox"),i=s.split(" "),f=u=!0}else f=u=!0,c=t.cloneNode(!0)}a=m(c);var b=e.prefixFragIdClass+r;a.indexOf(b)<0&&(a.push(b),c.setAttribute("class",a.join(" ")))}return u&&c.setAttribute("viewBox",i.join(" ")),f&&(c.setAttribute("width",i[2]+"px"),c.setAttribute("height",i[3]+"px")),c.setAttribute("xmlns",V),c.setAttribute("xmlns:xlink",O),c},y=function(e,t,r,n){s[e]=s[e]||[],s[e].push({callback:r,fragmentId:t,element:n,name:name})},S=function(e){for(var t,r=0,n=s[e].length;r<n;r++)!function(r){setTimeout(function(){t=s[e][r],k(e,t.fragmentId,t.callback,t.element,t.name)},0)}(r)},A=function(t,r,i){var s,l,a,c,u;if(s=r.split("#"),l=s[0],a=2===s.length?s[1]:void 0,void 0!==a&&(u=l.split("/"),c=u[u.length-1].replace(".svg","")),void 0!==n[l])n[l]instanceof SVGSVGElement?k(l,a,t,i,c):y(l,a,t,i,c);else{if(!e.XMLHttpRequest)return t("Browser does not support XMLHttpRequest"),!1;n[l]={},y(l,a,t,i,c);var f=new XMLHttpRequest;f.onreadystatechange=function(){if(4===f.readyState){if(404===f.status||null===f.responseXML)return t("Unable to load SVG file: "+l),!1;if(!(200===f.status||o.isLocal&&0===f.status))return t("There was a problem injecting the SVG: "+f.status+" "+f.statusText),!1;if(f.responseXML instanceof Document)n[l]=f.responseXML.documentElement;else if(DOMParser&&DOMParser instanceof Function){var e;try{var i=new DOMParser;e=i.parseFromString(f.responseText,"text/xml")}catch(t){e=void 0}if(!e||e.getElementsByTagName("parsererror").length)return t("Unable to parse SVG file: "+r),!1;n[l]=e.documentElement}S(l)}},f.open("GET",l),f.overrideMimeType&&f.overrideMimeType("text/xml"),f.send()}},C=function(e){var r="svg."+e+" {fill: currentColor;}",n=t.head||t.getElementsByTagName("head")[0],i=t.createElement("style");i.type="text/css",i.styleSheet?i.styleSheet.cssText=r:i.appendChild(t.createTextNode(r)),n.appendChild(i)},x=function(e,t,r){r?e.className.replace(t,""):e.className+=" "+t},k=function(t,r,s,o,c){var u,v,h,y,S,A,C,x;if(void 0===(u=b(a,n[t],r))||"string"==typeof u)return S=o.getAttribute("data-fallback-svg"),S=!(!S&&!a.svgFallbackDir)&&a.svgFallbackDir+"/"+r+".svg",S?(o.setAttribute("data-src",S),i.elements.splice(i.elements.indexOf(o),1),G(o,s)):s(u),!1;u.setAttribute("role","img"),I.call(u.children||[],function(e){e instanceof SVGDefsElement||e instanceof SVGTitleElement||e instanceof SVGDescElement||e.setAttribute("role","presentation")}),y=o.getAttribute("aria-hidden")||u.getAttribute("aria-hidden"),y?(u.setAttribute("aria-hidden","true"),C=u.querySelector("title"),x=u.querySelector("desc"),C&&u.removeChild(C),x&&u.removeChild(x)):(h=F("desc",u,o,r,!1),v=F("title",u,o,r,!1),(h.length>0||v.length>0)&&(A=v+" "+h,u.setAttribute("aria-labelledby",A.trim()))),d(o,u,["class"]);var k=[].concat(u.getAttribute("class")||[],"injected-svg",o.getAttribute("class")||[]).join(" ");u.setAttribute("class",N(k)),f(u,i.count,c),u.removeAttribute("xmlns:a");for(var w,j,E=u.querySelectorAll("script"),T=[],V=0,O=E.length;V<O;V++)(j=E[V].getAttribute("type"))&&"application/ecmascript"!==j&&"application/javascript"!==j||(w=E[V].innerText||E[V].textContent,T.push(w),u.removeChild(E[V]));if(T.length>0&&("always"===a.evalScripts||"once"===a.evalScripts&&!l[t])){for(var q=0,L=T.length;q<L;q++)new Function(T[q])(e);l[t]=!0}var M=u.querySelectorAll("style");I.call(M,function(e){var t=m(u),r=!0;(t.indexOf(a.removeStylesClass)>=0||a.removeAllStyles)&&t.indexOf(a.keepStylesClass)<0?e.parentNode.removeChild(e):(p(e,i.count,u,c)>0&&(r=!1),a.prefixStyleTags&&(g(e,i.count,u,c),r=!1),r&&(e.textContent+=""))}),o.parentNode.replaceChild(u,o),delete i.elements[i.elements.indexOf(o)],i.count++,s(u)},N=function(e){e=e.split(" ");for(var t={},r=e.length,n=[];r--;)t.hasOwnProperty(e[r])||(t[e[r]]=1,n.unshift(e[r]));return n.join(" ")},w=function(e){return!!(e&&e.constructor&&e.call&&e.apply)},j=function(e){return"[object Array]"===Object.prototype.toString.call(e)},E=function(e,t){var r=e.getAttribute("class");r=r||"",j(t)&&(t=t.join(" ")),t=r+" "+t,e.setAttribute("class",N(t))},I=Array.prototype.forEach||function(e,t){if(void 0===this||null===this||"function"!=typeof e)throw new TypeError;var r,n=this.length>>>0;for(r=0;r<n;++r)r in this&&e.call(t,this[r],r,this)},F=function(e,t,r,n,s){var l,a=n?n+"-":"";return a+=e+"-"+i.count,l=r.querySelector(e),l?T(e,t,l.textContent,a,t.firstChild):(l=t.querySelector(e),l?l.setAttribute("id",a):s?T(e,t,n,a,t.firstChild):a=""),a},T=function(e,r,n,i,s){var l,a=r.querySelector(e);return l=t.createElementNS(V,e),l.appendChild(t.createTextNode(n)),l.setAttribute("id",i),r.insertBefore(l,s),a&&a.parentNode.removeChild(a),l},r}();"object"==typeof angular?angular.module("svginjector",[]).provider("svgInjectorOptions",function(){var e={};return{set:function(t){e=t},$get:function(){return e}}}).factory("svgInjectorFactory",["svgInjectorOptions",function(e){return new r(e)}]).directive("svg",["svgInjectorFactory",function(e){var t=e.getConfig();return{restrict:"E",link:function(r,n,i){i.class&&i.class.indexOf(t.spriteClassIdName)>=0?i.$observe("class",function(){e.inject(n[0])}):(i.dataSrc||i.src)&&e.inject(n[0])}}}]):"object"==typeof module&&"object"==typeof module.exports?module.exports=r: true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return r}.call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof e&&(e.SVGInjector=r)}(window,document);
-//# sourceMappingURL=./dist/svg-injector.map.js
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(9)
-/* script */
-var __vue_script__ = __webpack_require__(10)
-/* template */
-var __vue_template__ = __webpack_require__(11)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Icon.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-77a3cee4", Component.options)
-  } else {
-    hotAPI.reload("data-v-77a3cee4", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['name'],
-
-    computed: {
-        svg: function svg() {
-            return '/img/svg/' + this.name + '.svg';
-        }
-    },
-
-    mounted: function mounted() {
-        SVGInjector.inject(this.$refs.icon);
-    }
-});
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("svg", { ref: "icon", attrs: { "data-src": _vm.svg } })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-77a3cee4", module.exports)
-  }
-}
-
-/***/ }),
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
 /* 12 */
 /***/ (function(module, exports) {
 
