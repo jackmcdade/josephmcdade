@@ -7,7 +7,8 @@ export default {
         'subfolders',
         'loading',
         'selectedAssets',
-        'restrictNavigation'
+        'restrictNavigation',
+        'isSearching'
     ],
 
 
@@ -41,7 +42,9 @@ export default {
          * Select (check) an asset.
          */
         selectAsset(id) {
-            this.$emit('asset-selected', id);
+            if (this.can('assets:'+ this.container +':edit')) {
+                this.$emit('asset-selected', id);
+            }
         },
 
         /**

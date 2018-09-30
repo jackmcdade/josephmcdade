@@ -6,47 +6,84 @@
     <meta name="viewport" content="width=device-width">
     <title>Joseph McDade &mdash; Producer, Songwriter, Musician</title>
     <link href="/assets/css/main.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/pqf5fkf.css">
 </head>
-<body class="bg-black">
-
-    <div class="px-4 py-2 bg-center bg-cover shadow-lg z-10 relative" style="background-image: url('/assets/img/flames-bg.jpg');" id="form">
-        <div class="cursor-pointer flex flex-wrap items-center justify-between text-white" v-if="! showForm">
-            <div><span class="uppercase font-heading">Coming Soon:</span> Free, high quality, creative commons tracks delivered every month. Kinda like <a href="https://unsplash.com" class="text-yellow" rel="noopener" target="_blank">Unsplash</a>, but for music.</div>
-            <button @click="toggleForm" class="bg-darken h-10 px-2 text-white rounded w-full md:w-auto text-center mt-2 md:mt-0 text-sm uppercase hover:text-yellow font-heading md:ml-2">Tell Me When</button>
-        </div>
-        <form action="https://josephmcdade.us19.list-manage.com/subscribe/post?u=8445886eaa2ee949714c109db&amp;id=fcee35aadd" method="post" target="_blank" class="flex justify-center" v-if="showForm" v-cloak>
-            <input type="email" name="EMAIL" placeholder="Email Address" required autofocus class="bg-white border-none px-2 w-1/2 h-10 rounded">
-            <button class="bg-darken text-white h-10 px-2 rounded w-full md:w-auto text-center mt-2 md:mt-0 text-sm uppercase font-heading md:ml-2 hover:text-yellow">Notify Me</button>
-        </form>
-    </div>
-
-    <div class="font-sans text-base relative bg-center bg-cover min-h-screen" style="background-image: url('/assets/img/scatterbrained-bg.jpg');">
-        <div class="bg-black absolute pin mix-screen opacity-50 z-10"></div>
-        <div id="site" class="p-3 z-20 relative h-full w-full text-center pt-6">
-            <div class="max-w-md mx-auto">
-                <div class="mb-6">{{ theme:output src="img/joseph.svg" }}</div>
-                <a href="https://itunes.apple.com/us/album/scatterbrained/1383014335">
-                    <img src="/assets/img/scatterbrained-cover-art.jpg" class="rounded-lg shadow hover-lift  w-auto h-auto" height="600" width="600" alt="A surreal woodland forest is populated by a plethora of creatures and hot air baloons" title="Scatterbrained Cover Art">
-                </a>
-                <p class="font-heading tracking-wide uppercase text-yellow mt-6 mb-2">Now Available On</p>
-                <div class="bg-darken inline-block rounded-full p-2">
-                    {{ links }}
-                        <a href="{{ url }}" class="text-white text-sm hover:text-yellow-dark mx-1">{{ name }}</a>
-                    {{ /links }}
+<body class="">
+    <div id="site">
+        <nav class="bg-white">
+            <div class="container flex items-center justify-between h-16 lg:h-24 mx-auto">
+                <a href="/">{{ theme:output src="img/joseph-logo.svg" }}</a>
+                <div class="hidden links lg:flex items-center uppercase font-heading">
+                    <a href="" class="text-black ml-4">Free Music for Creators</a>
+                    <a href="" class="text-black ml-4">Discography</a>
+                    <a href="" class="text-black ml-4">About Me</a>
+                    <a href="" class="text-black ml-4">Contact</a>
                 </div>
-                <div class="opacity-75 font-heading tracking-wide uppercase mix-overlay my-3 text-xs">&copy; {{ now format="Y"}} Joseph McDade</div>
+                <span class="lg:hidden">|||</span>
+            </div>
+        </nav>
+        <div class="hero">
+            <div class="container flex flex-center md:block relative h-full">
+                <div class="hero-content">
+                    <h1>Hello! I'm Joseph and I create <span class="hidden">music</span></h1>
+                    <img src="{{ theme:img src="music.svg"}}" alt="Music" class="">
+                </div>
             </div>
         </div>
-    </div>
-    <script src="/assets/js/app.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119012602-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        <div class="mt-8 md:pb-5 relative">
+            <img src="/assets/img/cables-and-picks.jpg" alt="XLR cables, for decorative purposes" class="absolute hidden xl:block" style="right: 0px; top: 960px; z-index: -1;" width="436">
+            <div class="container relative">
+                <img src="/assets/img/keyboard.jpg" alt="A keyboard, for decorative purposes" id="keyboard" class="absolute hidden lg:block" style="left: -440px; top: 600px; z-index: -1;" width="600">
+                <div class="md:flex mb-4 md:mb-8">
+                    <div class="md:w-1/2 md:pr-6">
+                        <div class="sign">My current focus</div>
+                        <h2 class="my-5">I create totally free music for creators</h2>
+                        <p>The current state of music licensing and monitization is abysmal and quite frankly, unsustainable. I’m cutting all out the crap,creating the best music I can, and giving it away for anyone to use for any purpose.</p>
+                        <p>Got a podcast or YouTube channel? Livestreaming D&D? Making screencasts or wedding videos? Go ahead, use my music. I made it for folks just for you. If you choose to support me and my efforts on Patreon, you will get access to bonus tracks every month.</p>
+                        <h4><a href="">Explore & Download My Music</a></h4>
+                    </div>
+                    <div class="md:w-1/2 pt-4">
+                        <img src="/assets/img/joseph-on-stage.jpg" alt="Joseph on Stage" width="540" class="md:mt-8">
+                    </div>
+                </div>
+                <div class="player md:w-120 relative mx-auto z-10" id="home-player">
+                    <div class="text-center py-2 text-heading text-sm border-b bg-grey-lightest">
+                        Check out a few full length samples
+                    </div>
+                    {{ assets:sample_tracks as="tracks" }}
+                        <player :tracks='{{ tracks | json }}'></player>
+                    {{ /assets:sample_tracks }}
+                </div>
+            </div>
+        </div>
 
-      gtag('config', 'UA-119012602-1');
-    </script>
+        <div class="container md:pl-6 mt-8 flex">
+            <img src="{{ theme:img src="left-quote.svg" }}" class="mr-5 hidden md:block">
+            <blockquote class="md:border-l-8 border-black md:pl-5 py-1">
+                <div class="font-bold italic md:w-120 leading-normal">Joseph’s ability to crank out out truly fantastic, original music is so rare these days. It's about time someone changed the way music is licensed. We need to support this guy!</div>
+                <cite class="text-grey text-sm font-heading roman mt-3 block antialiased">&mdash; Jack M, Founder & Designer @ Wilderborn</cite>
+            </blockquote>
+        </div>
+
+        <div class="container mt-9">
+            <div class="max-w-xl mx-auto flex flex-wrap">
+                <div class="w-1/2 bg-black p-6 text-white">
+                    <div class="sign-inverted mb-4">B Side</div>
+                    <h2 class="mb-3">Custom Tracks</h2>
+                    <p>If you like my music and range of styles, I am available for custom, exclusive tracks. Just let me know what you need, like, and how long it want it to be.</p>
+                    <p>I can create bumpers, stems, stings, and other types of package variations.</p>
+                    <h4><a href="" class="text-white">Get in touch</a></h4>
+                </div>
+                <div class="w-1/2 p-6 flex flex-col justify-center">
+                    <h2 class="mb-3">Follow Me</h2>
+                    <p>If you want to follow me on social media, please take a minute to say hello. Let’s put the <strong>social</strong> back in social network.</p>
+                    <h4><a href="" class="text-white">Get in touch</a></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="h-screen"></div>
+    </div>
+    {{ partial:scripts }}
 </body>
 </html>

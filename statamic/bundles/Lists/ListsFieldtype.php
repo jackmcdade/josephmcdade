@@ -9,6 +9,8 @@ class ListsFieldtype extends Fieldtype
 {
     protected $snake_name = 'list';
 
+    public $category = ['special', 'structured', 'text'];
+
     public function preProcess($data)
     {
         if (is_null($data)) {
@@ -16,5 +18,16 @@ class ListsFieldtype extends Fieldtype
         }
 
         return Helper::ensureArray($data);
+    }
+
+    public function process($data)
+    {
+        if (! is_array($data)) {
+            return $data;
+        }
+
+        return collect($data)->reject(function ($item) {
+            return in_array($item, [null, ''], true);
+        })->values()->all();
     }
 }

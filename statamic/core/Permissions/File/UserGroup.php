@@ -7,9 +7,10 @@ use Statamic\API\File;
 use Statamic\API\User;
 use Statamic\API\YAML;
 use Statamic\API\Role as RoleAPI;
-use Statamic\Events\Data\UserGroupDeleted;
 use Statamic\Contracts\Permissions\UserGroup as UserGroupContract;
 use Statamic\Contracts\Permissions\Permissible as PermissibleContract;
+use Statamic\Events\Data\UserGroupDeleted;
+use Statamic\Events\Data\UserGroupSaved;
 
 class UserGroup implements UserGroupContract
 {
@@ -256,16 +257,27 @@ class UserGroup implements UserGroupContract
      */
     public function save()
     {
-        $path = settings_path('users/groups.yaml');
+        $path = $this->yamlPath();
 
         $groups = YAML::parse(File::get($path));
 
-        $groups[$this->id()] = $this->toArray();
+        $groups[$this->id()] = $this->toSavableArray();
 
         File::put($path, YAML::dump($groups));
 
         // Whoever wants to know about it can do so now.
-        event('usergroup.saved', $this);
+        event('usergroup.saved', $this); // Deprecated! Please listen on UserGroupSaved event instead!
+        event(new UserGroupSaved($this));
+    }
+
+    /**
+     * Get the array that should be written to file for this group.
+     *
+     * @return array
+     */
+    protected function toSavableArray()
+    {
+        return $this->toArray();
     }
 
     /**
@@ -311,7 +323,7 @@ class UserGroup implements UserGroupContract
      */
     public function delete()
     {
-        $path = settings_path('users/groups.yaml');
+        $path = $this->yamlPath();
 
         $groups = YAML::parse(File::get($path));
 
@@ -320,6 +332,16 @@ class UserGroup implements UserGroupContract
         File::put($path, YAML::dump($groups));
 
         // Whoever wants to know about it can do so now.
-        event(new UserGroupDeleted($this->id(), []));
+        event(new UserGroupDeleted($this));
+    }
+
+    /**
+     * Get the yaml path.
+     *
+     * @return string
+     */
+    public function yamlPath()
+    {
+        return settings_path('users/groups.yaml');
     }
 }

@@ -12,31 +12,34 @@ class GlobalsController extends CpController
 {
     public function index()
     {
-        $this->access('globals:*:edit');
-
-        $globals = GlobalSet::all();
+        $globals = collect(GlobalSet::all())->filter(function ($global) {
+            return me()->can("globals:{$global->slug()}:view");
+        });
 
         if (count($globals) === 1) {
             return redirect()->route('globals.edit', $globals->first()->slug());
         }
+        if (count($globals) === 0) {
+            return redirect()->route('forms');
+        }
 
         return view('globals.index', [
-            'title' => t('cp.globals')
+            'title' => t('nav_globals')
         ]);
     }
 
     public function manage()
     {
         return view('globals.configure', [
-            'title' => t('cp.globals')
+            'title' => t('global_sets'),
         ]);
     }
 
     public function get()
     {
-        $this->access('globals:*:edit');
-
-        $globals = GlobalSet::all()->supplement('title', function ($global) {
+        $globals = GlobalSet::all()->filter(function ($global) {
+            return me()->can("globals:{$global->slug()}:view");
+        })->supplement('title', function ($global) {
             return $global->title();
         })->toArray();
 
@@ -52,6 +55,8 @@ class GlobalsController extends CpController
 
     public function store()
     {
+        $this->access('globals:*:edit');
+
         $title = $this->request->input('title');
 
         $slug = ($this->request->has('slug')) ? $this->request->input('slug') : Str::slug($title, '_');
@@ -89,7 +94,10 @@ class GlobalsController extends CpController
     {
         $global = GlobalSet::whereHandle($global);
 
-        return view('globals.edit', compact('global'));
+        return view('globals.edit', [
+            'global' => $global,
+            'title'  => $global->title(),
+        ]);
     }
 
     public function update($global)

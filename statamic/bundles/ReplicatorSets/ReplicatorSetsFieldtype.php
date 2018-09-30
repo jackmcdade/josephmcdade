@@ -2,6 +2,7 @@
 
 namespace Statamic\Addons\ReplicatorSets;
 
+use Statamic\CP\Fieldset;
 use Statamic\Extend\Fieldtype;
 use Statamic\CP\FieldtypeFactory;
 
@@ -13,6 +14,7 @@ class ReplicatorSetsFieldtype extends Fieldtype
 
         foreach ($data as $set_name => $set_config) {
             $set_config['name'] = $set_name;
+            $set_config['id'] = $set_name; // Used by Vue so the name can be modified freely and not lose track.
             $set_config['fields'] = $this->moveInNameKey(array_get($set_config, 'fields', []));
             $processed[] = $set_config;
         }
@@ -57,16 +59,22 @@ class ReplicatorSetsFieldtype extends Fieldtype
 
     public function process($data)
     {
+        if (! $data) {
+            return;
+        }
+
         $processed = [];
 
         foreach ($data as $set) {
             $set_name = $set['name'];
             unset($set['name']);
             $set['fields'] = $this->moveOutNameKey($set['fields']);
-            $processed[$set_name] = $set;
+            // Method is called cleanField but the logic applies to the sets too.
+            // We want to get rid of the Vue stuff like ids, isNew, isMeta, etc.
+            $processed[$set_name] = Fieldset::cleanFieldForSaving($set);
         }
 
-        return $processed;
+        return empty($processed) ? null : $processed;
     }
 
     private function moveOutNameKey($fields)
@@ -101,6 +109,6 @@ class ReplicatorSetsFieldtype extends Fieldtype
             $config[$field->getName()] = $field->process($config[$field->getName()]);
         }
 
-        return $config;
+        return Fieldset::cleanFieldForSaving($config);
     }
 }

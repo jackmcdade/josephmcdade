@@ -1,56 +1,54 @@
+@font-face {
+    font-family: 'bebas-neue';
+    src: url('../fonts/bebas-neue/BebasNeue-Regular.otf'),
+         url('../fonts/bebas-neue/BebasNeue-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'bebas-neue';
+    src: url('../fonts/bebas-neue/BebasNeue-Bold.otf'),
+         url('../fonts/bebas-neue/BebasNeue-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body {
+    @apply font-sans text-base text-black;
+}
+
 h1, h2, h3, h4 {
-    @apply .antialiased .font-bold;
+    @apply .font-heading .antialiased .uppercase .leading-none;
 }
 
 h1 {
-    @apply .text-6xl .font-serif;
+    @apply text-3xl;
 }
 
 h2 {
-    @apply .text-3xl;
+    @apply text-2xl;
 }
 
 h3 {
-    @apply .text-xl;
+    @apply text-xl;
 }
 
 h4 {
-    @apply .text-md;
+    @apply text-lg;
 }
 
 a {
-    @apply .text-pink .no-underline .cursor-pointer;
-
+    @apply .cursor-pointer;
     &:hover {
-        @apply .text-blue;
+        @apply .text-orange;
     }
 }
 
-strong, b {
-    font-weight: bold;
+h3 a, h4 a {
+    @apply underline text-black;
 }
 
-.content {
-    @apply .leading-normal;
-
-    p {
-        margin-bottom: 1em;
-        strong { @apply .font-semibold; }
-    }
-}
-
-.meta {
-    @apply .text-xs .text-grey .font-mono .antialiased .uppercase .tracking-wide;
-}
-
-
-.fixed {
-    will-change: transform;
-}
-
-ul {
-    @apply .list-reset;
-    li {
-        @apply .mb-1;
-    }
+p {
+    @apply .text-base .leading-normal .mb-5 .antialiased;
 }

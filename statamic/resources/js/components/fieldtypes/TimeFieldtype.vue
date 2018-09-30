@@ -19,7 +19,7 @@
         />
         <div>
             <span class="icon icon-remove" tabindex="0"
-                  v-show="hasTime" v-if="hasTime"
+                  v-if="!isRequired && hasTime"
                   @click="clear" @keyup.enter.space="clear">
                   &times;
             </span>
@@ -29,9 +29,13 @@
 
 <script>
 
-module.exports = {
+export default {
 
     mixins: [Fieldtype],
+
+    props: {
+        required: Boolean
+    },
 
     computed: {
         hour: {
@@ -71,7 +75,11 @@ module.exports = {
         },
 
         hasTime: function() {
-            return this.data !== null;
+            return this.required || this.data !== null;
+        },
+
+        isRequired() {
+            return this.required;
         }
     },
 

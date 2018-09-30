@@ -16,6 +16,8 @@ use Statamic\Exceptions\PublishException;
 
 abstract class Publisher
 {
+    use ProcessesFields;
+
     /**
      * @var \Illuminate\Http\Request
      */
@@ -57,6 +59,11 @@ abstract class Publisher
     protected $id;
 
     /**
+     * @var mixed
+     */
+    protected $fieldset;
+
+    /**
      * Create a new Publisher
      *
      * @param \Illuminate\Http\Request $request
@@ -83,8 +90,15 @@ abstract class Publisher
         // the case may be. We'll also update the essentials like status and order.
         $this->prepare();
 
+        // The fieldset may be overriden from within a child publisher class.
+        // For instance, the Entry publisher appends taxonomy fields.
+        $fieldset = $this->fieldset ?: $this->content->fieldset();
+
         // Fieldtypes may modify the values submitted by the user.
-        $this->processFields();
+        // We will remove the null values for everything except Eloquent-managed users. They need the nulls to override
+        // what's going on the DB. @todo: Do this better. Don't judge me.
+        $removeNulls = $this->content instanceof User && Config::get('users.driver') === 'eloquent' ? false : true;
+        $this->fields = $this->processFields($fieldset, $this->fields, $removeNulls);
 
         // Update the submission with the modified data
         $submission = array_merge($this->request->all(), ['fields' => $this->fields]);
@@ -130,13 +144,7 @@ abstract class Publisher
             return;
         }
 
-        $parent = Page::whereUri($this->request->input('extra.parent_url'));
-
-        $fieldset = $this->request->input('fieldset');
-
-        if ($fieldset !== $parent->fieldset()->name()) {
-            $this->fields['fieldset'] = $fieldset;
-        }
+        $this->fields['fieldset'] = $this->request->input('fieldset');
     }
 
     /**
@@ -148,8 +156,8 @@ abstract class Publisher
     {
         // If there's a slug, use it. Otherwise make one from the title field.
         // If there's no title field, an error should be thrown elsewhere.
-        return ($this->request->has('slug'))
-               ? $this->request->input('slug')
+        return ($this->request->has('fields.slug'))
+               ? $this->request->input('fields.slug')
                : Str::slug($this->request->input('fields.title'));
     }
 
@@ -194,25 +202,6 @@ abstract class Publisher
     }
 
     /**
-     * Run field data through fieldtypes processors
-     */
-    protected function processFields()
-    {
-        foreach ($this->content->fieldset()->fieldtypes() as $field) {
-            if (! in_array($field->getName(), array_keys($this->fields))) {
-                continue;
-            }
-
-            $this->fields[$field->getName()] = $field->process($this->fields[$field->getName()]);
-        }
-
-        // Get rid of null fields. (Empty arrays, literal null values, and empty strings)
-        $this->fields = array_filter($this->fields, function ($item) {
-            return is_array($item) ? !empty($item) : !in_array($item, [null, '']);
-        });
-    }
-
-    /**
      * Perform validation with provided rules
      *
      * @param  array $rules
@@ -221,7 +210,12 @@ abstract class Publisher
      */
     protected function validate($rules, $messages = [], $attributes = [])
     {
-        $validator = app('validator')->make($this->request->all(), $rules, $messages, $attributes);
+        $validator = app('validator')->make(
+            $this->request->all($rules),
+            $rules,
+            $messages,
+            $attributes
+        );
 
         if ($validator->fails()) {
             $e = new PublishException;
@@ -253,7 +247,7 @@ abstract class Publisher
      */
     protected function validateSubmission($submission)
     {
-        $validation = new ValidationBuilder($this->fields, $this->content->fieldset());
+        $validation = new ValidationBuilder($this->fields, $this->fieldset ?: $this->content->fieldset());
         $validation->build();
 
         $this->validate($validation->rules(), [], $validation->attributes());
@@ -283,12 +277,18 @@ abstract class Publisher
         if ($this->slug) {
             $this->content->slug($this->slug);
         }
+
+        if ($this->content instanceof User) {
+            $this->content->remove('fieldset');
+        }
     }
 
     /**
      * Get the data for the locale.
      *
      * If its localized, remove any fields that are the same as the default.
+     *
+     * Additionally, any non-localizable fields should be stripped out.
      *
      * @return array
      */
@@ -300,15 +300,26 @@ abstract class Publisher
         }
 
         $default = $this->content->defaultData();
-
         $data = $this->fields;
+        $fieldsetFields = $this->content->fieldset()->fields();
 
         foreach ($data as $key => $value) {
             if ($key === 'id') {
                 continue;
             }
 
+            // If the value is the same as what is in the default locale's content, we'll remove it.
             if ($value === array_get($default, $key)) {
+                unset($data[$key]);
+            }
+
+            // These fields are always localizable
+            if (in_array($key, ['title', 'slug'])) {
+                continue;
+            }
+
+            // If the given field exists in the fieldset, but its *not* localizable, we'll remove it.
+            if (array_has($fieldsetFields, $key) && !array_get($fieldsetFields, "{$key}.localizable", false)) {
                 unset($data[$key]);
             }
         }

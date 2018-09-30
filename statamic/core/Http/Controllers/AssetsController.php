@@ -13,12 +13,17 @@ use Statamic\API\Helper;
 use Statamic\API\Path;
 use Statamic\API\Stache;
 use Statamic\API\Str;
+use Statamic\API\User;
 use Illuminate\Http\Request;
 use Statamic\Assets\AssetCollection;
+use Statamic\CP\Publish\ProcessesFields;
+use Statamic\CP\Publish\ValidationBuilder;
 use Statamic\Presenters\PaginationPresenter;
 
 class AssetsController extends CpController
 {
+    use ProcessesFields;
+
     /**
      * The main assets routes, which redirects to the browse the first container.
      *
@@ -26,9 +31,17 @@ class AssetsController extends CpController
      */
     public function index()
     {
-        $this->access('assets:*:edit');
+        $containers = collect();
 
-        $containers = AssetContainer::all();
+        foreach (AssetContainer::all() as $container) {
+            if (User::getCurrent()->can("assets:{$container->uuid()}:view")) {
+                $containers->push($container);
+            }
+        }
+
+        if ($containers->count() === 0) {
+            return redirect()->route('collections');
+        }
 
         return redirect()->route('assets.browse', $containers->first()->uuid());
     }
@@ -42,7 +55,7 @@ class AssetsController extends CpController
      */
     public function browse($container, $folder = '/')
     {
-        $this->access('assets:'.$container.':edit');
+        $this->access('assets:'.$container.':view');
 
         $title = translate('cp.browsing_assets');
 
@@ -68,6 +81,8 @@ class AssetsController extends CpController
 
         // Grab all the assets from the container.
         $assets = $container->assets($path);
+
+        $assets = $this->sortAssets($assets);
 
         // Set up the paginator, since we don't want to display all the assets.
         $totalAssetCount = $assets->count();
@@ -123,6 +138,20 @@ class AssetsController extends CpController
         return [
             'assets' => $assets->toArray()
         ];
+    }
+
+    private function sortAssets($assets)
+    {
+        $sort = request('sort', 'title');
+        $dir = request('dir', 'desc');
+
+        return $assets->sortBy(function ($asset) use ($sort) {
+            if ($sort === 'title') {
+                return $asset->get('title', $asset->filename());
+            } else {
+                return $asset->$sort();
+            }
+        }, SORT_REGULAR, $dir === 'desc');
     }
 
     private function supplementAssetsForDisplay($assets)
@@ -209,9 +238,9 @@ class AssetsController extends CpController
 
         $asset = $this->supplementAssetForEditing($container->asset($path));
 
-        $this->authorize("assets:{$container_id}:edit");
+        $this->authorize("assets:{$container_id}:view");
 
-        $fields = $this->populateWithBlanks($asset);
+        $fields = $this->addBlankFields($asset->fieldset(), $asset->processedData());
 
         return ['asset' => $asset->toArray(), 'fields' => $fields];
     }
@@ -224,7 +253,9 @@ class AssetsController extends CpController
 
         $this->authorize("assets:{$container_id}:edit");
 
-        $fields = $this->processFields($asset, $this->request->all());
+        $this->validateAssetSubmission($this->request, $fieldset = $asset->fieldset());
+
+        $fields = $this->processFields($fieldset, $this->request->all());
 
         $asset->data($fields);
 
@@ -238,47 +269,20 @@ class AssetsController extends CpController
         return ['success' => true, 'message' => 'Asset updated', 'asset' => $asset->toArray()];
     }
 
-    private function populateWithBlanks($arg)
+    private function validateAssetSubmission(Request $request, $fieldset)
     {
-        // Get a fieldset and data
-        $fieldset = $arg->fieldset();
-        $data = $arg->processedData();
+        $fields = $request->all();
 
-        // Get the fieldtypes
-        $fieldtypes = collect($fieldset->fieldtypes())->keyBy(function($ft) {
-            return $ft->getName();
-        });
+        $validation = (new ValidationBuilder($fields, $fieldset))->build();
 
-        // Build up the blanks
-        $blanks = [];
-        foreach ($fieldset->fields() as $name => $config) {
-            if (! $default = array_get($config, 'default')) {
-                $default = $fieldtypes->get($name)->blank();
-            }
+        $validator = app('validator')->make(
+            array_dot(['fields' => $fields]), // validation builder will output everything prefixed with `fields.`
+            $validation->rules(), [], $validation->attributes()
+        );
 
-            $blanks[$name] = $default;
-            if ($fieldtype = $fieldtypes->get($name)) {
-                $blanks[$name] = $fieldtype->preProcess($default);
-            }
+        if ($validator->fails()) {
+            $this->throwValidationException($request, $validator);
         }
-
-        return array_merge($blanks, $data);
-    }
-
-    protected function processFields($asset, $fields)
-    {
-        foreach ($asset->fieldset()->fieldtypes() as $field) {
-            if (! in_array($field->getName(), array_keys($fields))) {
-                continue;
-            }
-
-            $fields[$field->getName()] = $field->process($fields[$field->getName()]);
-        }
-
-        // Get rid of null fields
-        $fields = array_filter($fields);
-
-        return $fields;
     }
 
     public function delete()

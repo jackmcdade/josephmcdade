@@ -1,15 +1,12 @@
 // Imports
 import Vue from 'vue'
+import 'vue-plyr/dist/vue-plyr.css'
 
 // Vue instance
 new Vue({
-    el: '#form',
-    data: {
-        showForm: false
+    el: '#site',
+
+    components: {
+        Player: require('./components/Player.vue'),
     },
-    methods: {
-        toggleForm() {
-            this.showForm = ! this.showForm
-        },
-    }
 });

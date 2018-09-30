@@ -9,7 +9,7 @@
 </template>
 
 <script>
-module.exports = {
+export default {
 
     mixins: [Fieldtype],
 
@@ -42,7 +42,7 @@ module.exports = {
     },
     ready() {
         if (this.data === null) {
-            this.data = false;
+            this.data = this.config.default || false;
         }
 
         this.bindChangeWatcher();

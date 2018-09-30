@@ -58,7 +58,7 @@ class ConditionFilterer implements ConditionFiltererContract
                 }
                 break;
             default:
-                $value = $data->getWithCascade($value);
+                $value = method_exists($data, 'getWithCascade') ? $data->getWithCascade($value) : $data->get($value);
                 break;
         }
 
@@ -133,6 +133,22 @@ class ConditionFilterer implements ConditionFiltererContract
                 break;
             case 'doesnt_end_with':
                 return ! Str::endsWith($value, $needle);
+                break;
+            case 'greater_than':
+            case 'gt':
+                return $value > $needle;
+                break;
+            case 'less_than':
+            case 'lt':
+                return $value < $needle;
+                break;
+            case 'greater_than_or_equal_to':
+            case 'gte':
+                return $value >= $needle;
+                break;
+            case 'less_than_or_equal_to':
+            case 'lte':
+                return $value <= $needle;
                 break;
             case 'matches':
             case 'match':

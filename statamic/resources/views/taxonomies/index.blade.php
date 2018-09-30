@@ -4,7 +4,7 @@
 
     <taxonomies-listing inline-template v-cloak>
         <div>
-            <div class="flexy mb-24 sticky">
+            <div class="flexy mb-3 sticky">
                 <h1 class="fill">{{ trans_choice('cp.taxonomies', 2) }}</h1>
                 @can('super')
                     <a href="{{ route('taxonomies.manage') }}" class="btn">{{ translate('cp.manage_taxonomies') }}</a>
@@ -22,7 +22,7 @@
                 </div>
             </template>
 
-            <div class="card">
+            <div class="card flush">
                 <dossier-table v-if="hasItems" :items="items" :options="tableOptions"></dossier-table>
             </div>
 

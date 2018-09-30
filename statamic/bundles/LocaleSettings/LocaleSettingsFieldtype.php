@@ -6,6 +6,11 @@ use Statamic\Extend\Fieldtype;
 
 class LocaleSettingsFieldtype extends Fieldtype
 {
+    public function blank()
+    {
+        return [];
+    }
+
     public function preProcess($data)
     {
         $processed = [];
@@ -25,7 +30,9 @@ class LocaleSettingsFieldtype extends Fieldtype
         foreach ($data as $config) {
             $locale = $config['locale'];
             unset($config['locale']);
-            $processed[$locale] = $config;
+            if ($locale && $locale !== '') {
+                $processed[$locale] = $config;
+            }
         }
 
         return $processed;

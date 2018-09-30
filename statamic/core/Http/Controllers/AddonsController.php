@@ -12,8 +12,12 @@ use Statamic\API\Fieldset;
 use Statamic\API\Str;
 use Statamic\API\Cache;
 use Statamic\API\Stache;
+use Statamic\Events\Data\AddonSettingsSaved;
 use Statamic\Extend\Addon;
+use Statamic\Config\Addons;
 use Illuminate\Http\Request;
+use Statamic\CP\Publish\ProcessesFields;
+use Statamic\CP\Publish\ValidationBuilder;
 use Statamic\Extend\Management\AddonRepository;
 
 /**
@@ -21,6 +25,8 @@ use Statamic\Extend\Management\AddonRepository;
  */
 class AddonsController extends CpController
 {
+    use ProcessesFields;
+
     /**
      * @var AddonRepository
      */
@@ -91,100 +97,68 @@ class AddonsController extends CpController
             'title' => $addon->name() . ' ' . trans_choice('cp.settings', 2),
             'slug'  => $addon->slug(),
             'extra' => [
-                'addon' => $addon->id()
+                'addon' => $addon->id(),
+                'env' => array_get(app(Addons::class)->env(), $addon->handle()),
             ],
             'content_data' => $this->getAddonData($addon),
             'content_type' => 'addon',
-            'fieldset' => 'addon.'.$addon->slug().'.settings'
+            'fieldset' => $addon->settingsFieldset()->toPublishArray()
         ]);
     }
 
     private function getAddonData(Addon $addon)
     {
-        $data = $addon->config();
-
-        $fieldset = $addon->settingsFieldset();
-
-        $data = $this->preProcessData($data, $fieldset);
-
-        $data = $this->populateWithBlanks($fieldset, $data);
-
-        return $data;
-    }
-
-    /**
-     * Create the data array, populating it with blank values for all fields in
-     * the fieldset, then overriding with the actual data where applicable.
-     *
-     * @param string $fieldset
-     * @param array $data
-     * @return array
-     */
-    private function populateWithBlanks($fieldset, $data)
-    {
-        // Get the fieldtypes
-        $fieldtypes = collect($fieldset->fieldtypes())->keyBy(function($ft) {
-            return $ft->getName();
-        });
-
-        // Build up the blanks
-        $blanks = [];
-        foreach ($fieldset->fields() as $name => $config) {
-            $blanks[$name] = $fieldtypes->get($name)->blank();
-        }
-
-        return array_merge($blanks, $data);
-    }
-
-    private function preProcessData($data, $fieldset)
-    {
-        $fieldtypes = collect($fieldset->fieldtypes())->keyBy(function($fieldtype) {
-            return $fieldtype->getFieldConfig('name');
-        });
-
-        foreach ($data as $field_name => $field_data) {
-            if ($fieldtype = $fieldtypes->get($field_name)) {
-                $data[$field_name] = $fieldtype->preProcess($field_data);
-            }
-        }
-
-        return $data;
+        return $this->preProcessWithBlankFields(
+            $addon->settingsFieldset(),
+            $addon->config()
+        );
     }
 
     public function saveSettings(Request $request, $addon)
     {
         $addon = new Addon(Str::studly($addon));
 
-        $data = $this->processFields($request->fields, $addon->settingsFieldset());
+        if ($response = $this->validateSubmission($request, $fieldset = $addon->settingsFieldset())) {
+            return $response;
+        }
+
+        $data = $this->processFields($fieldset, $request->fields);
+
+        $file = settings_path('addons/' . $addon->handle() . '.yaml');
+
+        // Remove environment managed vars from what was submitted, and replace them with their current values.
+        // They aren't editable in the CP but will be submitted (possibly incorrectly) anyway.
+        $environmentVars = array_keys(request()->input('extra.env') ?: []);
+        $data = array_except($data, $environmentVars);
+        $environmentValues = array_only(YAML::parse(File::get($file)), $environmentVars);
+        $data = array_merge($data, $environmentValues);
 
         $contents = YAML::dump($data);
 
-        $file = settings_path('addons/' . $addon->handle() . '.yaml');
         File::put($file, $contents);
 
         Cache::clear();
         Stache::clear();
 
-        $this->success('Settings updated');
+        // Whoever wants to know about it can do so now.
+        event(new AddonSettingsSaved($file, $data));
 
-        return ['success' => true, 'redirect' => route('addon.settings', $addon->slug())];
+        return ['success' => true, 'message' => t('settings_updated')];
     }
 
-    private function processFields($data, $fieldset)
+    private function validateSubmission(Request $request, $fieldset)
     {
-        foreach ($fieldset->fieldtypes() as $field) {
-            if (! in_array($field->getName(), array_keys($data))) {
-                continue;
-            }
+        $fields = $request->all();
 
-            $data[$field->getName()] = $field->process($data[$field->getName()]);
+        $validation = (new ValidationBuilder($fields, $fieldset))->build();
+
+        $validator = app('validator')->make($fields, $validation->rules(), [], $validation->attributes());
+
+        if ($validator->fails()) {
+            return [
+                'success' => false,
+                'errors'  => $validator->errors()->toArray()
+            ];
         }
-
-        // Get rid of null fields
-        $data = array_filter($data, function($value) {
-            return !is_null($value);
-        });
-
-        return $data;
     }
 }

@@ -20,7 +20,9 @@ class CollectionsServiceProvider extends ServiceProvider
         $this->filterWithKey();
         $this->l10n();
         $this->pipe();
+        $this->mapWithKeys();
         $this->transpose();
+        $this->missing();
     }
 
     /**
@@ -113,6 +115,23 @@ class CollectionsServiceProvider extends ServiceProvider
         });
     }
 
+    private function mapWithKeys()
+    {
+        Collection::macro('mapWithKeys', function ($callback) {
+            $result = [];
+
+            foreach ($this->items as $key => $value) {
+                $assoc = $callback($value, $key);
+
+                foreach ($assoc as $mapKey => $mapValue) {
+                    $result[$mapKey] = $mapValue;
+                }
+            }
+
+            return new static($result);
+        });
+    }
+
     /**
      * Backport of the pipe method from 5.2
      *
@@ -122,6 +141,18 @@ class CollectionsServiceProvider extends ServiceProvider
     {
         Collection::macro('pipe', function (callable $callback) {
             return $callback($this);
+        });
+    }
+
+    /**
+     * Register the inverse of the contains method.
+     *
+     * @return void
+     */
+    private function missing()
+    {
+        Collection::macro('missing', function ($value) {
+            return ! $this->contains($value);
         });
     }
 

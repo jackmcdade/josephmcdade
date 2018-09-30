@@ -11,7 +11,7 @@ export default {
     methods: {
         flashExistingMessages() {
             this.flash.forEach(
-                ({type, message}) => this.setFlashMessage(type, message)
+                ({ type, message }) => this.setFlashMessage(message, { theme: type })
             );
         },
 
@@ -27,7 +27,7 @@ export default {
         setFlashMessage(message, opts) {
             this.toast.showToast(message, {
                 theme:    opts.theme,
-                timeLife: opts.timeout || null,
+                timeLife: opts.timeout || 5000,
                 closeBtn: opts.hasOwnProperty('dismissible') ? opts.dismissible : true,
             });
         },

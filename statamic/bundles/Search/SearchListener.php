@@ -50,11 +50,21 @@ class SearchListener extends Listener
 
         $content = $event->item;
 
-        if (! is_object($content) || ! method_exists($content, 'id')) {
+        if (! is_object($content) || ! method_exists($content, 'toSearchableArray')) {
             return;
         }
 
-        Search::insert($event->id, $content->toArray());
+        foreach (Config::getLocales() as $locale) {
+            try {
+                Search::in(null, $locale)->insert(
+                    $event->id,
+                    $content->in($locale)->toSearchableArray(Config::get('search.searchable'))
+                );
+            } catch (\Exception $e) {
+                \Log::error("There was an error while updating the search index.");
+                \Log::error($e);
+            }
+        }
     }
 
     /**

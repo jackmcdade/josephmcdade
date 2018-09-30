@@ -6,6 +6,8 @@ use Statamic\Extend\Fieldtype;
 
 class RevealerFieldtype extends Fieldtype
 {
+    public $category = ['special'];
+
     public function canBeValidated()
     {
         return false;
@@ -19,10 +21,5 @@ class RevealerFieldtype extends Fieldtype
     public function preProcess($data)
     {
         return $data ?: false;
-    }
-
-    public function process($data)
-    {
-        return null;
     }
 }

@@ -6,6 +6,7 @@ use Statamic\API\Config;
 use Statamic\API\Helper;
 use Statamic\API\Taxonomy;
 use Statamic\API\Term;
+use Statamic\CP\ColumnSupplementor;
 use Statamic\Presenters\PaginationPresenter;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -22,7 +23,7 @@ class TaxonomyTermsController extends CpController
      */
     public function show($group)
     {
-        $this->access("taxonomies:$group:edit");
+        $this->access("taxonomies:$group:view");
 
         if (! Taxonomy::whereHandle($group)) {
             abort(404, "Taxonomy group [$group] does not exist.");
@@ -48,7 +49,7 @@ class TaxonomyTermsController extends CpController
      */
     public function get($folder)
     {
-        $this->access("taxonomies:$folder:edit");
+        $this->access("taxonomies:$folder:view");
 
         $taxonomy = Taxonomy::whereHandle($folder);
 
@@ -61,9 +62,8 @@ class TaxonomyTermsController extends CpController
             return false;
         });
 
-        // Set up the columns that the Vue component will be expecting. A developer may customize these
-        // columns in the taxonomy's configuration file, but if left blank we will set the defaults.
         $columns = array_get($taxonomy->data(), 'columns', ['title', 'slug', 'count']);
+        $terms = (new ColumnSupplementor)->supplement($columns, $terms);
 
         // Set the default/fallback sort order
         $sort = 'title';

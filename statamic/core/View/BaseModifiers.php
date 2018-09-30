@@ -3,6 +3,7 @@
 namespace Statamic\View;
 
 use Statamic\API\Arr;
+use Statamic\API\URL;
 use Statamic\API\Data;
 use Statamic\API\File;
 use Statamic\API\Path;
@@ -13,6 +14,7 @@ use Statamic\API\Config;
 use Statamic\API\Helper;
 use Statamic\API\Str;
 use Statamic\API\Content;
+use Statamic\API\Widont;
 use Statamic\Extend\Modifier;
 use Statamic\API\Localization;
 use Stringy\StaticStringy as Stringy;
@@ -93,6 +95,17 @@ class BaseModifiers extends Modifier
     }
 
     /**
+     * Returns the avg of all items in the array, optionally by specific key
+     * @param $value
+     * @param $params
+     * @return mixed
+     */
+    public function avg($value, $params)
+    {
+        return collect($value)->avg(array_get($params, 0, null));
+    }
+
+    /**
      * Returns a focal point as a background-position CSS value.
      *
      * @param $value
@@ -101,7 +114,7 @@ class BaseModifiers extends Modifier
     public function backgroundPosition($value)
     {
         if (! Str::contains($value, '-')) {
-            return $value;
+            return '50% 50%';
         }
 
         return vsprintf('%d%% %d%%', explode('-', $value));
@@ -564,10 +577,8 @@ class BaseModifiers extends Modifier
      */
     public function fullUrls($value, $params)
     {
-        $domain = Config::getSiteURL();
-
-        return preg_replace_callback('/="(\/[^"]+)"/ism', function($item) use ($domain) {
-            return '="' . Path::tidy($domain . $item[1]) . '"';
+        return preg_replace_callback('/="(\/[^"]+)"/ism', function($item) {
+            return '="' . URL::makeAbsolute($item[1]) . '"';
         }, $value);
     }
 
@@ -605,8 +616,9 @@ class BaseModifiers extends Modifier
             return $item->$method();
         }
 
-        // If after all is said and done, there's still nothing, just show the original value.
-        return $value;
+        // If after all is said and done and you haven't found
+        // related data, it should not fall back to the original value.
+        return null;
     }
 
     /**
@@ -708,9 +720,13 @@ class BaseModifiers extends Modifier
      */
     public function inArray($value, $params, $context)
     {
-        $array = array_get($context, $params[0], $params);
+        $needle = array_get($context, $params[0], $params);
 
-        return in_array($value, $array);
+        if (is_array($needle) && count($needle) === 1) {
+            $needle = $needle[0];
+        }
+
+        return in_array($needle, $value);
     }
 
     /**
@@ -805,6 +821,17 @@ class BaseModifiers extends Modifier
     public function isBlank($value)
     {
         return Stringy::isBlank($value);
+    }
+
+    /**
+     * Return true if the string is an email address.
+     *
+     * @param $value
+     * @return bool
+     */
+    public function isEmail($value)
+    {
+        return filter_var($value, FILTER_VALIDATE_EMAIL) !== false;
     }
 
     /**
@@ -904,6 +931,17 @@ class BaseModifiers extends Modifier
     public function isUppercase($value)
     {
         return Stringy::isUpperCase($value);
+    }
+
+    /**
+     * Returns true if the string is a URL
+     *
+     * @param $value
+     * @return bool
+     */
+    public function isUrl($value)
+    {
+        return filter_var($value, FILTER_VALIDATE_URL) !== false;
     }
 
     /**
@@ -1071,6 +1109,17 @@ class BaseModifiers extends Modifier
     }
 
     /**
+     * Returns the max of all items in the array, optionally by specific key
+     * @param $value
+     * @param $params
+     * @return mixed
+     */
+    public function max($value, $params)
+    {
+        return collect($value)->max(array_get($params, 0, null));
+    }
+
+    /**
      * Merge an array variable with another array variable
      *
      * @param $value
@@ -1083,6 +1132,17 @@ class BaseModifiers extends Modifier
         $to_merge = (array) array_get($context, $params[0], $context);
 
         return array_merge($value, $to_merge);
+    }
+
+    /**
+     * Returns the min of all items in the array, optionally by specific key
+     * @param $value
+     * @param $params
+     * @return mixed
+     */
+    public function min($value, $params)
+    {
+        return collect($value)->min(array_get($params, 0, null));
     }
 
     /**
@@ -1263,6 +1323,20 @@ class BaseModifiers extends Modifier
     }
 
     /**
+     * Pad array to the specified length with a value
+     * @param  $value
+     * @param  $params
+     * @return string
+     */
+    public function pad($value, $params)
+    {
+        $amount = array_get($params, 0, 0);
+        $with = array_get($params, 1, null);
+
+        return array_pad($value, $amount, $with);
+    }
+
+    /**
      * Renders an array variable with a partial, context aware
      * @param  $value
      * @param  $params
@@ -1316,7 +1390,7 @@ class BaseModifiers extends Modifier
      */
     public function readTime($value, $params)
     {
-        $words = str_word_count(strip_tags($value));
+        $words = mb_str_word_count(strip_tags($value));
 
         return ceil($words / array_get($params, 0, 200));
     }
@@ -1624,6 +1698,21 @@ class BaseModifiers extends Modifier
     }
 
     /**
+     * Strip whitespace from HTML
+     *
+     * @param $value
+     * @param $params
+     * @return string
+     */
+    public function spaceless($value, $params)
+    {
+        $nolb = str_replace(array("\r", "\n"), '', $value);
+        $nospaces = preg_replace('/\s+/', ' ', $nolb);
+
+        return preg_replace('/>\s+</', '><', $nospaces);
+    }
+
+    /**
      * Returns true if the string starts with a given substring ($params[0]), false otherwise.
      * The comparison is case-insensitive.
      *
@@ -1729,10 +1818,14 @@ class BaseModifiers extends Modifier
     public function table($value, $params)
     {
         $rows = $value;
+
         $parse_markdown = bool(array_get($params, 0));
 
-        $html = '<table>';
+        // Support adding attributes to the table element after the first arg
+        unset($params[0]);
+        $attrs = app('html')->attributes($this->buildAttributesFromParameters($params));
 
+        $html = '<table'.$attrs.'>';
         foreach ($rows as $row) {
             $html .= '<tr>';
             foreach ($row['cells'] as $cell) {
@@ -1988,7 +2081,7 @@ class BaseModifiers extends Modifier
     public function where($value, $params)
     {
         $key = array_get($params, 0);
-        $val = array_get($params, 1);
+        $val = str_bool(array_get($params, 1));
 
         $collection = collect($value)->whereLoose($key, $val);
 
@@ -2000,11 +2093,12 @@ class BaseModifiers extends Modifier
      * <nobr> tags between the last two words of each paragraph.
      *
      * @param $value
+     * @param $params
      * @return string
      */
-    public function widont($value)
+    public function widont($value, $params)
     {
-        return Helper::widont($value);
+        return Widont::preventWidows($value, array_get($params, 0, false));
     }
 
     /**
@@ -2036,7 +2130,7 @@ class BaseModifiers extends Modifier
      */
     public function wordCount($value)
     {
-        return str_word_count($value);
+        return mb_str_word_count($value);
     }
 
     /**
@@ -2050,6 +2144,42 @@ class BaseModifiers extends Modifier
     public function yearsAgo($value, $params)
     {
         return carbon($value)->diffInYears(array_get($params, 0));
+    }
+
+    /**
+     * Get the embed URL when given a youtube or vimeo link that's
+     * direct to the page.
+     *
+     * @param string  $url
+     *
+     * @return string
+     */
+    public function embedUrl($url)
+    {
+        if (str_contains($url, 'youtube')) {
+            return str_replace('watch?v=', 'embed/', $url);
+        }
+
+        if (str_contains($url, 'youtu.be')) {
+            return str_replace('youtu.be', 'www.youtube.com/embed', $url);
+        }
+
+        if (str_contains($url, 'vimeo')) {
+            return str_replace('/vimeo.com', '/player.vimeo.com/video', $url);
+        }
+
+        return $url;
+    }
+
+    /**
+     * Whether a given video URL is embeddable.
+     *
+     * @param string $url
+     * @return bool
+     */
+    public function isEmbeddable($url)
+    {
+        return Str::contains($url, ['youtube', 'vimeo', 'youtu.be']);
     }
 
     // ------------------------------------

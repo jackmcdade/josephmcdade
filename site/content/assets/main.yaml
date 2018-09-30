@@ -1,16 +1,13 @@
 title: Main Assets
 path: assets
 url: /assets
+fieldset: assets
 assets:
-  img/black-bear-cubs.jpg:
-    title: Black Bear Cubs
-    alt: Some black bears standing up
-  img/coffee-mug.jpg:
-    title: Coffee Mug
-  img/me.jpg:
-    title: Me
-    alt: Niles Peppertrout
-  img/redwood-sign.jpg:
-    title: redwood sign
-  img/desert.jpg:
-    focus: 77-70
+  music/batch-001/joseph-mcdade--batch-001--beautiful-ann.mp3:
+    title: Beautiful Ann
+    length: 3:47
+    batch: "001"
+  music/batch-001/joseph-mcdade--batch-001--metal-hammer.mp3:
+    title: Metal Hammer
+    length: 3:04
+    batch: "001"

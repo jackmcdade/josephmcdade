@@ -3,7 +3,6 @@
 <meta name="viewport" content="width=device-width">
 <meta id="csrf-token" value="{{ csrf_token() }}" />
 <meta name="robots" content="noindex,nofollow">
-
 <title>{{ $title or '' }} | Statamic</title>
 <link href="{{ cp_resource_url('css/cp.css') }}?v={{ STATAMIC_VERSION }}" rel="stylesheet" />
 @if (\Statamic\API\File::exists('site/helpers/cp/override.css'))
@@ -15,12 +14,16 @@
     var Statamic = {
         'siteRoot': '{!! SITE_ROOT !!}',
         'cpRoot': '{!! $cp_root !!}',
-        'urlPath': '/{!! request()->path() !!}',
+        'urlPath': '/{!! e(request()->path()) !!}',
         'resourceUrl': '{!! cp_resource_url('/') !!}',
         'locales': {!! json_encode(Statamic\API\Config::get('system.locales')) !!},
         'markdownHardWrap': {{ bool_str(Statamic\API\Config::get('theming.markdown_hard_wrap')) }},
         'conditions': {},
+        'MediumEditorExtensions': {},
         'flash': [],
+        'staticCachingEnabled': {{ \Statamic\API\Config::get('caching.static_caching_enabled') ? 'true' : 'false' }},
+        'userId': '{{ \Statamic\API\User::loggedIn() ? \Statamic\API\User::getCurrent()->id() : null }}',
+        'dateFormat': '{{ to_moment_js_date_format(\Statamic\API\Config::get('cp.date_format')) }}'
     };
 </script>
 

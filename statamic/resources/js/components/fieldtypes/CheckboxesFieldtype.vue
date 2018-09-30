@@ -13,7 +13,7 @@
 </template>
 
 <script>
-module.exports = {
+export default {
 
     mixins: [Fieldtype],
 
@@ -39,7 +39,14 @@ module.exports = {
 
         focus() {
             document.getElementById(`${this.name}-0`).focus();
-        }
+        },
+
+        getReplicatorPreviewText() {
+            return this.data.map(item => {
+                var option = _.findWhere(this.config.options, {value: item});
+                return (option) ? option.text : item;
+            }).join(', ');
+        },
 
     }
 };

@@ -9,7 +9,7 @@
 var CodeMirror = require('codemirror');
 require('codemirror/mode/yaml/yaml');
 
-module.exports = {
+export default {
 
     mixins: [Fieldtype],
 
@@ -21,9 +21,10 @@ module.exports = {
 
     ready: function() {
         this.codemirror = CodeMirror(this.$els.codemirror, {
-            value: this.data || '',
+            value: this.data || this.config.default || '',
             mode: 'yaml',
             lineNumbers: true,
+            lineWrapping: true,
             viewportMargin: Infinity
         });
 

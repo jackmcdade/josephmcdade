@@ -8,14 +8,16 @@
     	<div v-if="hasDate" class="date-time-container">
 
     		<div class="col-date">
-    			<div class="daterange daterange--single" :data-datetime="date" v-el:date>
-    				<span class="icon icon-calendar"></span>
-    				<span class="icon icon-remove" @click="removeDate" v-if="blankAllowed">&times;</span>
+    			<div class="daterange daterange--single flex" :data-datetime="date" v-el:date>
+                    <div class="flex items-center h-8" v-if="blankAllowed">
+        				<span class="icon icon-remove" @click="removeDate" >&times;</span>
+                    </div>
     			</div>
     		</div>
-    		<div class="col-time">
-    			<div class="time-fieldtype" v-if="timeAllowed">
-    				<time-fieldtype v-ref:time v-show="hasTime" :data.sync="time"></time-fieldtype>
+
+    		<div class="col-time" v-if="timeAllowed">
+    			<div class="time-fieldtype">
+    				<time-fieldtype v-ref:time v-show="hasTime" :data.sync="time" :required="timeRequired"></time-fieldtype>
     				<button type="button" class="btn btn-default btn-icon add-time" v-show="!hasTime" @click="addTime" tabindex="0">
     					<span class="icon icon-clock"></span>
     				</button>
@@ -29,8 +31,10 @@
 </template>
 
 <script>
+import moment from 'moment';
+import Calendar from 'baremetrics-calendar';
 
-module.exports = {
+export default {
 
     mixins: [Fieldtype],
 
@@ -62,7 +66,19 @@ module.exports = {
         },
 
         timeAllowed: function() {
-            return this.config.allow_time !== false;
+            return this.timeRequired || this.allowTime;
+        },
+
+        allowTime: function() {
+            if (this.config.allow_time == undefined) {
+                return true;
+            }
+
+            return this.config.allow_time != false;
+        },
+
+        timeRequired: function () {
+            return this.config.require_time;
         },
 
         blankAllowed: function() {
@@ -145,6 +161,11 @@ module.exports = {
                 element: $(self.$el).find('.daterange'),
                 current_date: moment(date),
                 earliest_date: this.config.earliest_date || "January 1, 1900",
+                format: {
+                    input: this.config.input_format || Statamic.dateFormat,
+                    jump_month: 'MMMM',
+                    jump_year: 'YYYY'
+                },
                 callback: function() {
                     var newDate = moment(this.current_date).format('YYYY-MM-DD');
                     self.updateDateString(newDate);
@@ -159,15 +180,23 @@ module.exports = {
     },
 
     ready: function() {
-        if (this.data) {
-            this.time = this.data.substr(11);
+        const timeFormat = 'HH:mm';
+        const dateFormat = 'YYYY-MM-DD';
+
+        if (!this.data && !this.blankAllowed) {
+            const format = (this.timeRequired || this.config.show_time)
+                ? dateFormat + ' ' + timeFormat
+                : dateFormat;
+
+            this.data = moment().format(format);
         }
 
-        // If there's no data (ie. a blank field) and blanks are _not_ allowed, we want
-        // to initialize the data to the current date, so that the value will get
-        // saved without the user needing to interact with the field first.
-        if (!this.data && !this.blankAllowed) {
-            this.data = moment().format('YYYY-MM-DD');
+        else if (this.data && this.timeRequired && !this.hasTime) {
+            this.data += ' ' + moment().format(timeFormat);
+        }
+
+        if (this.data) {
+            this.time = this.data.substr(11);
         }
 
         this.watchTime();

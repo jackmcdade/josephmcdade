@@ -1,12 +1,12 @@
 <template>
-    <input :type="mode" :class="classes" v-model="data" tabindex="0" :autofocus="autofocus" />
+    <input :type="mode" :class="classes" v-model="data" tabindex="0" :autofocus="autofocus" :placeholder="config.placeholder" />
 </template>
 
 <script>
 
-module.exports = {
+export default {
 
-    mixins: [Fieldtype],
+    mixins: [Fieldtype, AutoSlug],
 
     props: ['autofocus'],
 
@@ -21,6 +21,12 @@ module.exports = {
             return 'form-control type-' + this.mode;
         }
     },
+
+    ready() {
+        if (this.config.autoslug) {
+            this.autoSlug(this.config.autoslug);
+        }
+    }
 
 };
 </script>

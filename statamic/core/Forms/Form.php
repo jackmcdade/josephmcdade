@@ -7,6 +7,7 @@ use Statamic\API\YAML;
 use Statamic\API\File;
 use Statamic\API\Config;
 use Statamic\API\Folder;
+use Statamic\Events\Data\FormSaved;
 use Statamic\Exceptions\FatalException;
 use Statamic\Contracts\Forms\Form as FormContract;
 
@@ -159,6 +160,8 @@ class Form implements FormContract
         $this->formset()->name($this->name());
 
         $this->formset()->save();
+
+        event(new FormSaved($this));
     }
 
     /**
@@ -255,6 +258,25 @@ class Form implements FormContract
     public function editUrl()
     {
         return $this->formset()->editUrl();
+    }
+
+    /**
+     * Get or set whether form submissions should be saved.
+     *
+     * @param bool $store
+     * @return bool
+     */
+    public function shouldStore($store = null)
+    {
+        if (is_null($store)) {
+            return $this->formset()->get('store', true);
+        }
+
+        if ($store === true) {
+            $this->formset()->remove('store');
+        } else {
+            $this->formset()->set('store', $store);
+        }
     }
 
     /**

@@ -11,6 +11,13 @@ body {
     color: $color_gray_dark;
 	font-family: $font;
     font-size: 16px;
+    width: 100%;
+}
+
+*, *::before, *::after {
+    border-width: 0;
+    border-style: solid;
+    border-color: $color_border;
 }
 
 // svg sprite
@@ -19,30 +26,39 @@ body > svg { display: none; }
 .application-grid {
     display: grid;
     grid-template-columns: 200px auto;
-}
 
-@media (max-width: 980px) {
-    .application-grid {
-        grid-template-columns: 140px 1fr auto;
-    }
-}
-
-@media (max-width: $screen-xs-max) {
-    .application-grid {
+    &.hide-nav {
         display: block;
-        padding-left: 0;
-        padding-right: 0;
+
+        > .nav-main {
+            display: none;
+        }
     }
 }
 
 .cp-head {
-	position: relative;
-	display: flex;
-    align-items: center;
-    justify-content: space-between;
-	padding: 24px;
-    margin-bottom: 8px;
+    @apply .flex .items-center .relative .p-3;
 	font-size: 14px;
+
+    .logo {
+        display: block;
+        height: 32px;
+        width: 200px;
+        display: flex;
+        align-items: center;
+        svg {
+            height: 20px;
+            width: 90px;
+        }
+    }
+
+    .version {
+        color: rgba(#6D868C, .5);
+        font-size: 10px;
+        left: 5px;
+        position: relative;
+        bottom: -3px;
+    }
 
     #typeahead {
         @extend .z-depth-1;
@@ -66,15 +82,49 @@ body > svg { display: none; }
 
     .head-links {
         position: relative;
+        margin-left: auto;
     }
 }
 
-.site-status-stripe {
-    background: $brand-darker;
+.site-warning-stripe {
+    background: $color_red;
     box-shadow: inset 0 -2px 3px rgba(0,0,0,.1);
     padding: 8px 24px;
     font-size: 14px;
     color: #fff;
+
+    > a, > a:hover {
+        color: white;
+        text-decoration: underline;
+    }
+
+    &.status-trial {
+        background: $brand-darker;
+
+        > a, > a:hover { color: $brand-primary; }
+    }
+
+    .btn { text-decoration: none; }
+}
+
+@media (max-width: 980px) {
+    .application-grid {
+        grid-template-columns: 140px 1fr auto;
+    }
+
+    .cp-head .logo {
+        width: 140px;
+    }
+}
+
+@media (max-width: $screen-xs-max) {
+    .application-grid {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .cp-head .logo { display: none; }
 }
 
 

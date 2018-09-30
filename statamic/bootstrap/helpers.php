@@ -5,6 +5,7 @@ use Statamic\API\Str;
 use Statamic\API\URL;
 use Statamic\API\File;
 use Statamic\API\Path;
+use Statamic\API\User;
 use Statamic\API\Config;
 use Michelf\SmartyPants;
 use Statamic\Extend\API;
@@ -15,6 +16,7 @@ use Statamic\Data\DataCollection;
 use Illuminate\Support\Debug\Dumper;
 use Stringy\StaticStringy as Stringy;
 use Statamic\View\Blade\Modifier as BladeModifier;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 if (! function_exists('array_get')) {
     /**
@@ -78,6 +80,22 @@ function translate_choice($id, $number, array $parameters = [])
 function bool_str($bool)
 {
     return ((bool) $bool) ? 'true' : 'false';
+}
+
+/**
+ * Casts strings "true" and "false" as proper bools
+ *
+ * @param string $string
+ * @return mixed
+ */
+function str_bool($string) {
+    if (strtolower($string) === 'true') {
+        return true;
+    } elseif (strtolower($string) === 'false') {
+        return false;
+    }
+
+    return $string;
 }
 
 /**
@@ -291,6 +309,11 @@ function collect_users($value = [])
     return new \Statamic\Data\Users\UserCollection($value);
 }
 
+function me()
+{
+    return User::getCurrent();
+}
+
 /**
  * Gets an addon's API class if it exists, or creates a temporary generic addon class.
  *
@@ -330,14 +353,12 @@ function col_class($width)
 /**
  * SVG helper
  *
- * Outputs a tag to reference a symbol in the sprite.
- *
  * @param string $name Name of svg
  * @return string
  */
 function svg($name)
 {
-    return '<svg><use xlink:href="#'.$name.'" /></svg>';
+    return inline_svg($name);
 }
 
 /**
@@ -376,11 +397,9 @@ function active_for($url)
  */
 function nav_is($url)
 {
-    $url = URL::makeRelative($url);
-    $url = ltrim(URL::removeSiteRoot($url), '/');
-    $url = preg_replace('/^index\.php\//', '', $url);
+    $current = URL::makeAbsolute(URL::getCurrentWithQueryString());
 
-    return request()->is($url . '*');
+    return $url === $current || Str::startsWith($current, $url . '/');
 }
 
 /**
@@ -566,21 +585,48 @@ function refreshing_addons()
  */
 function cp_middleware()
 {
-    return ['cp-enabled', 'enforce-default-cp-locale', 'set-cp-locale', 'outpost'];
+    return ['cp-enabled', 'add-cp-headers', 'enforce-default-cp-locale', 'set-cp-locale', 'outpost'];
+}
+
+/**
+ * Sanitizes a string
+ *
+ * @param bool $antlers  Whether Antlers (curly braces) should be escaped.
+ * @return string
+ */
+
+function sanitize($value, $antlers = true)
+{
+    if (is_array($value)) {
+        return sanitize_array($value, $antlers);
+    }
+
+    if ($value instanceof UploadedFile) {
+        return $value;
+    }
+
+    $value = htmlentities($value);
+
+    if ($antlers) {
+        $value = str_replace(['{', '}'], ['&lbrace;', '&rbrace;'], $value);
+    }
+
+    return $value;
 }
 
 /**
  * Recusive friendly method of sanitizing an array.
  *
+ * @param bool $antlers  Whether Antlers (curly braces) should be escaped.
  * @return array
  */
-function sanitize_array($array)
+function sanitize_array($array, $antlers = true)
 {
     $result = array();
 
     foreach ($array as $key => $value) {
         $key = htmlentities($key);
-        $result[$key] = is_array($value) ? sanitize_array($value) : htmlentities($value);
+        $result[$key] = sanitize($value, $antlers);
     }
 
     return $result;
@@ -646,4 +692,83 @@ if (! function_exists('tap')) {
         $callback($value);
         return $value;
     }
+}
+
+if (! function_exists('mb_str_word_count')) {
+    /**
+     * Multibyte version of str_word_count
+     *
+     * @param string $string
+     * @param int $format
+     * @param string $charlist
+     *
+     * @link https://stackoverflow.com/a/17725577/1569621
+     */
+    function mb_str_word_count($string, $format = 0, $charlist = '[]')
+    {
+        $words = empty($string = trim($string)) ? [] : preg_split('~[^\p{L}\p{N}\']+~u', $string);
+
+        switch ($format) {
+            case 0:
+                return count($words);
+                break;
+            case 1:
+            case 2:
+                return $words;
+                break;
+            default:
+                return $words;
+                break;
+        }
+    };
+}
+
+/**
+ * Convert a PHP date format into one suitable for moment.js
+ * Adapted from https://stackoverflow.com/a/30192680/1569621
+ *
+ * @param string $format
+ * @return string
+ **/
+function to_moment_js_date_format($format)
+{
+    return strtr($format, [
+        'd' => 'DD',
+        'D' => 'ddd',
+        'j' => 'D',
+        'l' => 'dddd',
+        'N' => 'E',
+        'S' => 'o',
+        'w' => 'e',
+        'z' => 'DDD',
+        'W' => 'W',
+        'F' => 'MMMM',
+        'm' => 'MM',
+        'M' => 'MMM',
+        'n' => 'M',
+        't' => '', // no equivalent
+        'L' => '', // no equivalent
+        'o' => 'YYYY',
+        'Y' => 'YYYY',
+        'y' => 'YY',
+        'a' => 'a',
+        'A' => 'A',
+        'B' => '', // no equivalent
+        'g' => 'h',
+        'G' => 'H',
+        'h' => 'hh',
+        'H' => 'HH',
+        'i' => 'mm',
+        's' => 'ss',
+        'u' => 'SSS',
+        'e' => 'zz', // deprecated since version 1.6.0 of moment.js
+        'I' => '', // no equivalent
+        'O' => '', // no equivalent
+        'P' => '', // no equivalent
+        'T' => '', // no equivalent
+        'Z' => '', // no equivalent
+        'c' => '', // no equivalent
+        'r' => '', // no equivalent
+        'U' => 'X',
+    ]);
 }

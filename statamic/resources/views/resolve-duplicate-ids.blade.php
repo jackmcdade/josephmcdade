@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1 class="mb-24">{{ t('duplicate_id_title')}}</h1>
+    <h1 class="mb-3">{{ t('duplicate_id_title')}}</h1>
 
     @if ($duplicates->isEmpty())
         <div class="card flexy">
@@ -25,7 +25,7 @@
                                     <form action="{{ route('resolve-duplicate-ids.update') }}" method="POST">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="path" value="{{ $path }}" />
-                                        <button class="btn btn-default">Generate New ID</button>
+                                        <button class="btn btn-default">{{ t('generate_new_id') }}</button>
                                     </form>
                                 </td>
                             </tr>

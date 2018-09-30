@@ -14,16 +14,27 @@
         </asset-editor>
 
         <div class="asset-thumb-container">
+
             <div class="asset-thumb">
-                <a :href="toenail" class="zoom" v-if="isImage" :title="label">
-                    <img :src="thumbnail" />
-                </a>
+
+                <!-- Solo Bard -->
+                <template v-if="isImage && isInBardField && !isInAssetBrowser">
+                    <img :src="asset.url" >
+                </template>
+
                 <template v-else>
-                    <div v-if="canShowSvg"
-                         class="svg-img"
-                         :style="'background-image:url('+asset.url+')'">
-                    </div>
-                    <file-icon v-else type="div" :extension="asset.extension"></file-icon>
+                    <a :href="toenail" class="zoom" v-if="isImage" :title="label">
+                        <img :src="thumbnail" />
+                    </a>
+
+                    <template v-else>
+                        <div v-if="canShowSvg"
+                             class="svg-img"
+                             :style="'background-image:url('+asset.url+')'">
+                        </div>
+                        <file-icon v-else type="div" :extension="asset.extension"></file-icon>
+                    </template>
+
                 </template>
 
                 <div class="asset-controls">
@@ -42,7 +53,7 @@
 
         <div class="asset-meta">
             <div class="asset-filename" :title="label">{{ label }}</div>
-            <div class="asset-filesize">{{ asset.size }}</div>
+            <div class="asset-filesize" v-if="! isInBardField">{{ asset.size }}</div>
         </div>
     </div>
 
@@ -54,7 +65,29 @@ import Asset from './Asset';
 
 export default {
 
-    mixins: [Asset]
+    mixins: [Asset],
 
+    computed: {
+
+        isInAssetBrowser() {
+            let vm = this;
+
+            while (true) {
+                let parent = vm.$parent;
+
+                if (! parent) return false;
+
+                if (parent.constructor.name === 'AssetBrowser') {
+                    return true;
+                }
+
+                vm = parent;
+            }
+        },
+
+        isInBardField() {
+            return this.$parent.isInBardField;
+        }
+    }
 }
 </script>

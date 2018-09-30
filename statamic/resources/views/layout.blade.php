@@ -4,19 +4,28 @@
       @include('partials.head')
 </head>
 
-<body id="statamic" :class="{ 'nav-visible': navVisible }">
+<body id="statamic" :class="{ 'nav-visible': navVisible, 'overflow-hidden': modalOpen }">
 
-      @if ($is_trial || $is_unlicensed)
-            <div class="site-status-stripe flexy">
+      @if (!$outpost->isReadyForProduction())
+            <div class="site-warning-stripe {{ $outpost->isTrialMode() ? 'status-trial' : '' }} flexy">
                   <div class="fill">
-                        @if ($is_trial) {{ t('trial_mode_badge') }} @elseif ($is_unlicensed){{ t('unlicensed') }} @endif
+                        @if ($outpost->hasSuccessfulResponse() && $outpost->isTrialMode())
+                              <span class="mr-2">{{ t('trial_mode') }}</span>
+                        @endif
+                        <span class="{{ $outpost->isTrialMode() ? 'text-grey' : '' }}">
+                        @if ($outpost->licensingMessage())
+                              {!! $outpost->licensingMessage() !!}
+                        @endif
+                        </span>
                   </div>
-                  <a href="{{ route('licensing') }}" class="btn btn-small mr-16">Add License Key</a>
-                  <a href="https://statamic.com/buy" class="btn btn-primary btn-small" target="_blank">Buy Now</a>
+                  <div class="buttons">
+                        @if (request()->route()->getName() !== 'licensing')
+                              <a href="{{ route('licensing') }}" class="btn btn-small mr-1">{{ t('manage') }}</a>
+                        @endif
+                        <a href="https://statamic.com/buy" class="btn btn-primary btn-small" target="_blank">{{ t('buy_now')  }}</a>
+                  </div>
             </div>
       @endif
-
-      {!! inline_svg('sprite') !!}
 
       <nav class="nav-mobile">
           <a href="{{ route('cp') }}" class="logo">
@@ -36,23 +45,13 @@
       </div>
 
       @include('partials.shortcuts')
+      @include('partials.alerts')
+      @include('partials.global-header')
 
-      <div class="application-grid">
+      <div class="application-grid @yield('content-class')">
+            @include('partials.nav-main')
 
-            <nav class="nav-main">
-                  <a href="{{ route('cp') }}" class="logo">
-                        {!! inline_svg('statamic-logo') !!}
-                        <span class="version" v-cloak>@{{ version }}</span>
-                  </a>
-                  @include('partials.nav-main')
-            </nav>
-
-            <div class="content @yield('content-class')">
-
-                  @include('partials.global-header')
-
-                  @include('partials.alerts')
-
+            <div class="content">
                   <div class="page-wrapper">
                         <div class="sneak-peek-header flexy">
                               <h1 class="fill">{{ trans('cp.sneak_peeking') }}</h1>
@@ -61,6 +60,12 @@
                         @yield('content')
                   </div>
             </div>
+
+            <login-modal
+                  v-if="showLoginModal"
+                  username="{{ \Statamic\API\User::getCurrent()->username() }}"
+                  @closed="showLoginModal = false"
+            ></login-modal>
 
             <vue-toast v-ref:toast></vue-toast>
       </div>

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Statamic\API\Collection;
 use Statamic\API\Entry;
+use Statamic\Events\Data\PublishFieldsetFound;
 
 class PublishEntryController extends PublishController
 {
@@ -34,8 +35,10 @@ class PublishEntryController extends PublishController
         }
 
         $fieldset = $collection->fieldset();
+        event(new PublishFieldsetFound($fieldset, 'entry'));
 
-        $data = $this->populateWithBlanks($fieldset->name());
+        $data = $this->addBlankFields($fieldset);
+        $data['slug'] = null; // For Vue. Slug might not've been in the fieldset.
 
         $extra = [
             'collection' => $collection->path(),
@@ -43,26 +46,21 @@ class PublishEntryController extends PublishController
             'route'      => $collection->route()
         ];
 
-        if ($collection->order() === 'date') {
-            $extra['datetime'] = Carbon::now()->format('Y-m-d');
-        }
-
         return view('publish', [
             'extra'             => $extra,
             'is_new'            => true,
             'content_data'      => $data,
             'content_type'      => 'entry',
-            'fieldset'          => $fieldset->name(),
+            'fieldset'          => $fieldset->toPublishArray(),
             'title'             => $this->title($fieldset),
             'uuid'              => null,
             'uri'               => null,
             'url'               => null,
             'slug'              => null,
-            'status'            => true,
+            'status'            => $collection->get('default_status') === 'draft' ? false : true,
             'locale'            => $this->locale(request()),
             'is_default_locale' => true,
             'locales'           => $this->getLocales(),
-            'taxonomies'        => $this->getTaxonomies($fieldset),
             'suggestions'        => $this->getSuggestions($fieldset),
         ]);
     }
@@ -76,7 +74,7 @@ class PublishEntryController extends PublishController
      */
     public function edit($collection, $slug)
     {
-        $this->authorize("collections:$collection:edit");
+        $this->authorize("collections:$collection:view");
 
         $locale = $this->locale($this->request);
 
@@ -97,25 +95,28 @@ class PublishEntryController extends PublishController
             'order_type'    => $entry->orderType()
         ];
 
+        $fieldset = $entry->fieldset();
+        event(new PublishFieldsetFound($fieldset, 'entry', $entry));
+
+        $data = $this->addBlankFields($fieldset, $entry->processedData());
+        $data['slug'] = $entry->slug();
+
         if ($entry->orderType() === 'date') {
             // Get the datetime without milliseconds
             $datetime = substr($entry->date()->toDateTimeString(), 0, 16);
             // Then strip off the time, if it's not supposed to be there.
             $datetime = ($entry->hasTime()) ? $datetime : substr($datetime, 0, 10);
 
-            $extra['datetime'] = $datetime;
+            $data['date'] = $datetime;
         }
-
-        $data = $this->populateWithBlanks($entry);
 
         return view('publish', [
             'extra'              => $extra,
             'is_new'             => false,
             'content_data'       => $data,
             'content_type'       => 'entry',
-            'fieldset'           => $entry->fieldset()->name(),
+            'fieldset'           => $fieldset->toPublishArray(),
             'title'              => array_get($data, 'title', $slug),
-            'title_display_name' => array_get($entry->fieldset()->fields(), 'title.display', t('title')),
             'uuid'               => $id,
             'uri'                => $entry->uri(),
             'url'                => $entry->url(),
@@ -124,8 +125,7 @@ class PublishEntryController extends PublishController
             'locale'             => $locale,
             'is_default_locale'  => $entry->isDefaultLocale(),
             'locales'            => $this->getLocales($id),
-            'taxonomies'         => $this->getTaxonomies($entry->fieldset()),
-            'suggestions'        => $this->getSuggestions($entry->fieldset()),
+            'suggestions'        => $this->getSuggestions($fieldset),
         ]);
     }
 
@@ -138,14 +138,18 @@ class PublishEntryController extends PublishController
      */
     protected function redirect(Request $request, $entry)
     {
-        if (! $request->continue) {
-            return route('entries.show', $entry->collectionName());
+        if ($request->another) {
+            return route('entry.create', $entry->collectionName());
         }
 
-        return route('entry.edit', [
-            'collection' => $entry->collectionName(),
-            'slug'       => $entry->slug(),
-        ]);
+        if ($request->continue) {
+            return route('entry.edit', [
+                'collection' => $entry->collectionName(),
+                'slug'       => $entry->slug(),
+            ]);
+        }
+
+        return route('entries.show', $entry->collectionName());
     }
 
     /**

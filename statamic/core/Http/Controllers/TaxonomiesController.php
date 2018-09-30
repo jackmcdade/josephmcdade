@@ -19,25 +19,27 @@ class TaxonomiesController extends CpController
      */
     public function index()
     {
-        $this->access('taxonomies:*:edit');
-
         $groups = collect(Taxonomy::all())->filter(function ($taxonomy) {
-            return User::getCurrent()->can("taxonomies:{$taxonomy->path()}:edit");
+            return User::getCurrent()->can("taxonomies:{$taxonomy->path()}:view");
         })->all();
 
         if (count($groups) === 1) {
             return redirect()->route('terms.show', reset($groups)->path());
         }
 
+        if (count($groups) === 0) {
+            return redirect()->route('globals');
+        }
+
         return view('taxonomies.index', [
-            'title'   => 'Taxonomies'
+            'title'   => t('nav_taxonomies')
         ]);
     }
 
     public function manage()
     {
         return view('taxonomies.manage', [
-            'title'   => 'Taxonomies'
+            'title'   => t('nav_taxonomies')
         ]);
     }
 
@@ -46,7 +48,7 @@ class TaxonomiesController extends CpController
         $groups = [];
 
         foreach (Taxonomy::all() as $group) {
-            if (! User::getCurrent()->can("taxonomies:{$group->path()}:edit")) {
+            if (! User::getCurrent()->can("taxonomies:{$group->path()}:view")) {
                 continue;
             }
 

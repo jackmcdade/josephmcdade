@@ -10,3 +10,6 @@ links:
     name: Bandcamp
     url: "https://josephmcdade.bandcamp.com"
 id: 547baf65-7290-4542-8e1a-187ce7ce08d2
+sample_tracks:
+  - /assets/music/batch-001/joseph-mcdade--batch-001--metal-hammer.mp3
+  - /assets/music/batch-001/joseph-mcdade--batch-001--beautiful-ann.mp3

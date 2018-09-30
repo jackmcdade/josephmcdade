@@ -2,7 +2,7 @@
 
 namespace Statamic\API;
 
-use Statamic\Data\Services\UsersService;
+use Statamic\Contracts\Data\Services\UsersService;
 
 class User
 {
@@ -14,6 +14,18 @@ class User
     public static function all()
     {
         return app(UsersService::class)->all();
+    }
+
+    /**
+     * Pluck specific values off users
+     *
+     * @param string $value
+     * @param string $key
+     * @return \Illuminate\Support\Collection
+     */
+    public static function pluck($value, $key = null)
+    {
+        return collect(static::all()->toArray())->pluck($value, $key);
     }
 
     /**

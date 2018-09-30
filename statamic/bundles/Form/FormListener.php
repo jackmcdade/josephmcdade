@@ -45,6 +45,10 @@ class FormListener extends Listener
 
         $submission = $form->createSubmission();
 
+        if ($form->formset()->get('sanitize', true)) {
+            $fields = sanitize_array($fields);
+        }
+
         try {
             $submission->data($fields);
             $submission->uploadFiles();
@@ -62,7 +66,9 @@ class FormListener extends Listener
             return $this->formFailure($params, $errors, $formset);
         }
 
-        $submission->save();
+        if ($form->shouldStore()) {
+            $submission->save();
+        }
 
         // Emit an event after the submission has been created.
         $this->emitEvent('submission.created', $submission);

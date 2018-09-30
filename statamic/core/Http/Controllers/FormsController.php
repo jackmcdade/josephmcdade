@@ -43,7 +43,10 @@ class FormsController extends CpController
             return $this->pageNotFound();
         }
 
-        return view('forms.show', compact('form'));
+        return view('forms.show', [
+            'title' => $form->title(),
+            'form' => $form,
+        ]);
     }
 
     public function getFormSubmissions($form)
@@ -53,10 +56,10 @@ class FormsController extends CpController
         $form = Form::get($form);
 
         $columns = collect($form->columns())->map(function ($val, $column) {
-            return ['label' => $column, 'field' => $column, 'translation' => $val];
+            return ['value' => $column, 'header' => $val];
         })->values()->reverse()->push([
-            'label' => 'datestring',
-            'field' => 'datestamp'
+            'value' => 'datestring',
+            'header' => 'datestamp'
         ])->reverse();
 
         $submissions = collect($form->submissions()->each(function ($submission) {
@@ -82,7 +85,7 @@ class FormsController extends CpController
         }
 
         // Perform the sort!
-        if ($customSort !== 'datestamp' || $sortOrder !== 'desc') {
+        if ($customSort !== 'datestring' || $sortOrder !== 'desc') {
             $submissions = $submissions->sortBy($sort, null, $sortOrder === 'desc');
         }
 
@@ -114,20 +117,24 @@ class FormsController extends CpController
         collect($submission->data())->each(function ($value, $field) use ($submission) {
             $sanitized = ($submission->formset()->isUploadableField($field))
                 ? UploadedFilePresenter::render($submission, $field)
-                : $this->sanitizeField($value);
+                : $this->sanitizeField($value, $submission);
 
             $submission->set($field, $sanitized);
         });
     }
 
-    private function sanitizeField($value)
+    private function sanitizeField($value, $submission)
     {
         $is_arr = is_array($value);
 
         $values = Helper::ensureArray($value);
 
         foreach ($values as &$value) {
-            $value = (is_array($value)) ? json_encode($value) : htmlspecialchars($value);
+            if (is_array($value)) {
+                $value = json_encode($value);
+            } elseif (! $submission->formset()->get('sanitize', true)) {
+                $value = sanitize($value);
+            }
         }
 
         return ($is_arr) ? $values : $values[0];
@@ -147,6 +154,7 @@ class FormsController extends CpController
 
         $array['metrics'] = $this->preProcessMetrics($form);
         $array['email'] = $form->email();
+        $array['store'] = $form->shouldStore();
 
         foreach ($form->fields() as $name => $field) {
             $field['name'] = $name;
@@ -213,6 +221,7 @@ class FormsController extends CpController
 
         $form->title($this->request->input('formset.title'));
         $form->honeypot($this->request->input('formset.honeypot'));
+        $form->shouldStore($this->request->input('formset.store'));
         $form->columns($this->prepareColumns());
         $form->fields($this->prepareFields());
         $form->metrics($this->prepareMetrics());
@@ -233,8 +242,9 @@ class FormsController extends CpController
         $this->access('super');
 
         $form = Form::get($form);
+        $title = t('editing_formset');
 
-        return view('forms.edit', compact('form'));
+        return view('forms.edit', compact('form', 'title'));
     }
 
     public function update($form)
@@ -245,6 +255,7 @@ class FormsController extends CpController
 
         $form->title($this->request->input('formset.title'));
         $form->honeypot($this->request->input('formset.honeypot'));
+        $form->shouldStore($this->request->input('formset.store'));
         $form->columns($this->prepareColumns());
         $form->metrics($this->prepareMetrics());
         $form->email($this->prepareEmail());
@@ -335,7 +346,7 @@ class FormsController extends CpController
     {
         $fields = [];
 
-        foreach ($this->request->input('formset.fields') as $field) {
+        foreach ($this->request->input('formset.fields', []) as $field) {
             $field_name = $field['name'];
             unset($field['name'], $field['column']);
             $fields[$field_name] = $field;
@@ -382,8 +393,10 @@ class FormsController extends CpController
             return $this->pageNotFound();
         }
 
+        $title = translate_choice('cp.submissions', 1);
+
         $this->sanitizeSubmission($submission);
 
-        return view('forms.submission', compact('form', 'submission'));
+        return view('forms.submission', compact('form', 'submission', 'title'));
     }
 }

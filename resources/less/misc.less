@@ -1,9 +1,9 @@
 body {
-    @apply .font-sans .text-white;
+    @apply bg-white;
 }
 
-a {
-    text-decoration: none;
+nav a {
+    @apply .text-black .no-underline;
 }
 
 .mix-overlay {
@@ -27,6 +27,83 @@ a {
         transform: translateY(-2px);
         @apply .shadow-lg;
     }
+}
+
+.hero {
+    @apply bg-black text-white p-2;
+    height: 300px;
+
+    h1 {
+        @apply font-normal ml-2 text-lg;
+    }
+
+    .hero-content {
+        @apply flex items-center flex-col justify-center;
+    }
+}
+
+@screen md {
+    .hero {
+        @apply block;
+        height: 600px;
+
+        h1 {
+            @apply ml-6 text-3xl;
+        }
+
+        .container {
+            background-image: url('/assets/img/ozone-gui.jpg');
+            background-repeat: no-repeat;
+            background-position: center 24px;
+            background-size: contain;
+        }
+
+        .hero-content {
+            @apply absolute pin-b max-w-full -mb-4 block;
+        }
+    }
+
+    #home-player {
+        margin-top: -240px;
+    }
+}
+
+.sign {
+    @apply bg-black text-white font-heading uppercase leading-none antialiased inline-block;
+    padding: 10px 24px 6px;
+}
+
+.sign-inverted {
+    @apply bg-white text-black font-heading uppercase leading-none antialiased inline-block;
+    padding: 10px 24px 6px;
+}
+
+.player {
+    @apply font-heading font-bold antialiased bg-white shadow;
+
+    .player-track {
+        @apply cursor-pointer border-b flex items-center justify-between;
+        padding: 22px 24px 14px;
+
+        &:hover {
+            .player-track-title {
+                padding-left: 4px;
+            }
+        }
+
+        &.active {
+            @apply .text-blue;
+        }
+    }
+
+    .player-track-title {
+        transition: all .15s ease-in-out;
+    }
+
+    .player-track-length {
+        @apply .text-right;
+    }
+
 }
 
 [v-cloak] {

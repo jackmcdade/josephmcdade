@@ -2,17 +2,23 @@
 
 namespace Statamic\Http\Controllers;
 
-use Statamic\API\Config;
+use Statamic\API\Str;
 use Statamic\API\URL;
 use Statamic\API\User;
 use Statamic\API\Email;
+use Statamic\API\Config;
 use Statamic\API\Helper;
 use Statamic\API\Fieldset;
 use Statamic\Addons\User\PasswordReset;
+use Statamic\CP\Publish\ProcessesFields;
+use Statamic\Events\Data\PublishFieldsetFound;
+use Statamic\CP\Publish\PreloadsSuggestions;
+use Statamic\Presenters\PaginationPresenter;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UsersController extends CpController
 {
-    use GetsTaxonomiesFromFieldsets;
+    use ProcessesFields, PreloadsSuggestions;
 
     /**
      * @var \Statamic\Contracts\Data\Users\User|\Statamic\Contracts\Permissions\Permissible
@@ -30,13 +36,23 @@ class UsersController extends CpController
     }
 
     /**
+     * Redirect to the current user's password edit page
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function accountPassword()
+    {
+        return redirect()->route('user.password.edit', User::getCurrent()->username());
+    }
+
+    /**
      * List users
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $this->access('users:edit');
+        $this->access('users:view');
 
         $data = [
             'title' => 'Users'
@@ -67,10 +83,58 @@ class UsersController extends CpController
             $users = $users->multisort($sort . ':' . request('order'));
         }
 
+        // Set up the paginator, since we don't want to display all the users.
+        $totalUserCount = $users->count();
+        $perPage = Config::get('cp.pagination_size');
+        $currentPage = (int) $this->request->page ?: 1;
+        $offset = ($currentPage - 1) * $perPage;
+        $users = $users->slice($offset, $perPage);
+        $paginator = new LengthAwarePaginator($users, $totalUserCount, $perPage, $currentPage);
+
         return [
-            'items'   => $users->values()->toArray(),
-            'columns' => ['name', 'username', 'email']
+            'items'   => $users->toArray(),
+            'columns' => Config::get('users.columns', ['name', 'username', 'email']),
+            'pagination' => [
+                'totalItems' => $totalUserCount,
+                'itemsPerPage' => $perPage,
+                'totalPages'    => $paginator->lastPage(),
+                'currentPage'   => $paginator->currentPage(),
+                'prevPage'      => $paginator->previousPageUrl(),
+                'nextPage'      => $paginator->nextPageUrl(),
+                'segments'      => array_get($paginator->render(new PaginationPresenter($paginator)), 'segments')
+            ]
         ];
+    }
+
+    /**
+     * Simple users search
+     *
+     * @return array
+     */
+    public function search()
+    {
+        $this->access('users:view');
+
+        $query = strtolower(request('q'));
+
+        $columns = Config::get('users.columns', ['name', 'username', 'email']);
+
+        $users = User::all()->supplement('checked', function () {
+            return false;
+        })->toArray();
+
+        $filtered = [];
+
+        foreach($users as $user) {
+            foreach ($columns as $key => $column) {
+                if (Str::contains(strtolower(array_get($user, $column)), $query)) {
+                    $filtered[] = $user;
+                    break;
+                }
+            }
+        };
+
+        return $filtered;
     }
 
     /**
@@ -82,16 +146,17 @@ class UsersController extends CpController
     {
         $this->authorize('users:create');
 
-        $fieldset = 'user';
+        $fieldset = Fieldset::get('user');
+        event(new PublishFieldsetFound($fieldset, 'user'));
 
-        $data = $this->populateWithBlanks($fieldset);
+        $data = $this->addBlankFields($fieldset);
 
         return view('publish', [
             'extra'             => [],
             'is_new'            => true,
             'content_data'      => $data,
             'content_type'      => 'user',
-            'fieldset'          => $fieldset,
+            'fieldset'          => $fieldset->toPublishArray(),
             'title'             => trans('cp.create_a_user'),
             'uuid'              => null,
             'url'               => null,
@@ -102,7 +167,7 @@ class UsersController extends CpController
             'locale'            => default_locale(),
             'is_default_locale' => true,
             'locales'           => [],
-            'taxonomies'        => $this->getTaxonomies(Fieldset::get($fieldset))
+            'suggestions'       => $this->getSuggestions($fieldset),
         ]);
     }
 
@@ -118,10 +183,13 @@ class UsersController extends CpController
 
         // Users can always manage their data
         if ($this->user !== User::getCurrent()) {
-            $this->authorize('users:edit');
+            $this->authorize('users:view');
         }
 
-        $data = $this->populateWithBlanks($this->user);
+        $fieldset = $this->user->fieldset();
+        event(new PublishFieldsetFound($fieldset, 'user', $this->user));
+
+        $data = $this->addBlankFields($fieldset, $this->user->processedData());
 
         if (Config::get('users.login_type') === 'email') {
             $data['email'] = $this->user->email();
@@ -129,7 +197,9 @@ class UsersController extends CpController
             $data['username'] = $this->user->username();
         }
 
-        $data['roles'] = $this->user->get('roles');
+        $data['roles'] = $this->user->roles()->map(function ($role) {
+            return $role->uuid();
+        });
         $data['user_groups'] = $this->user->groups()->keys();
         $data['status'] = $this->user->status();
 
@@ -138,7 +208,7 @@ class UsersController extends CpController
             'is_new'            => false,
             'content_data'      => $data,
             'content_type'      => 'user',
-            'fieldset'          => $this->user->fieldset()->name(),
+            'fieldset'          => $fieldset->toPublishArray(),
             'title'             => $this->user->username(),
             'uuid'              => $this->user->id(),
             'url'               => null,
@@ -149,8 +219,55 @@ class UsersController extends CpController
             'locale'            => default_locale(),
             'is_default_locale' => true,
             'locales'           => [],
-            'taxonomies'         => $this->getTaxonomies($this->user->fieldset())
+            'suggestions'       => $this->getSuggestions($fieldset),
         ]);
+    }
+
+    /**
+     * Edit a user's password.
+     *
+     * @param string $username
+     * @return \Illuminate\View\View
+     */
+    public function editPassword($username)
+    {
+        $user = User::whereUsername($username);
+        $notEditingOwnPassword = $user !== User::getCurrent();
+
+        // Determine whether user change change password
+        if ($notEditingOwnPassword) {
+            $this->authorize('users:edit-passwords');
+        }
+
+        return view('users.edit-password', compact('user', 'notEditingOwnPassword'));
+    }
+
+    /**
+     * Update a user's password.
+     *
+     * @param string $username
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updatePassword($username)
+    {
+        $user = User::whereUsername($username);
+
+        // Determine whether user change change password
+        if ($user !== User::getCurrent()) {
+            $this->authorize('users:edit-passwords');
+        }
+
+        $this->validate($this->request, [
+            'password' => 'required|confirmed'
+        ]);
+
+        $resetter = new PasswordReset;
+        $resetter->user($user);
+        $resetter->updatePassword($this->request->input('password'));
+
+        $this->success(t('saved_success'));
+
+        return redirect()->route('users');
     }
 
     /**
@@ -158,7 +275,6 @@ class UsersController extends CpController
      *
      * @return array
      */
-
     public function delete()
     {
         $this->authorize('users:delete');
@@ -170,42 +286,6 @@ class UsersController extends CpController
         }
 
         return ['success' => true];
-    }
-
-    /**
-     * Create the data array, populating it with blank values for all fields in
-     * the fieldset, then overriding with the actual data where applicable.
-     *
-     * @param string|\Statamic\Contracts\Data\Users\User $arg
-     * @return array
-     */
-    private function populateWithBlanks($arg)
-    {
-        // Get a fieldset and data
-        if ($arg instanceof \Statamic\Contracts\Data\Users\User) {
-            $fieldset = $arg->fieldset();
-            $data = $arg->processedData();
-        } else {
-            $fieldset = Fieldset::get($arg);
-            $data = [];
-        }
-
-        // Get the fieldtypes
-        $fieldtypes = collect($fieldset->fieldtypes())->keyBy(function ($ft) {
-            return $ft->getName();
-        });
-
-        // Build up the blanks
-        $blanks = [];
-        foreach ($fieldset->fields() as $name => $config) {
-            if (! $default = array_get($config, 'default')) {
-                $default = $fieldtypes->get($name)->blank();
-            }
-
-            $blanks[$name] = $default;
-        }
-
-        return array_merge($blanks, $data);
     }
 
     public function getResetUrl($username)
