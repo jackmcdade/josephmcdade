@@ -23,7 +23,7 @@ export default {
     data: () => ({
         currentTrackIndex: 0,
         player: {},
-        options: {controls: ['play', 'progress', 'current-time', 'mute', 'volume']}
+        options: {'controls': ['play', 'progress', 'current-time', 'mute', 'volume'], 'volume': .75}
     }),
 
     computed: {

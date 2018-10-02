@@ -21,15 +21,15 @@
                     <a href="/about" class="text-black ml-4 {{ if segment_1 == "about"}}text-orange {{/if }}">About Me</a>
                     <a href="mailto:joseph@josephmcdade.com" class="text-black ml-4">Contact</a>
                 </div>
-                <span class="lg:hidden">|||</span>
+                <!-- <span class="lg:hidden">|||</span> -->
             </div>
         </nav>
         {{ template_content }}
         <footer class="site-footer bg-black py-5 text-white">
-            <div class="container flex items-center justify-between">
+            <div class="container lg:flex items-center justify-between">
                 <div>
                     <a href="/" class="text-white">{{ theme:output src="img/joseph-logo.svg" }}</a>
-                    <div class="text-sm uppercase antialiased mt-1 font-heading opacity-25">&copy; Copyright {{ now format="Y" }} &bull; All Rights Reserved &bull; Site Designed by <a href="https://jackmcdade.com" class="text-white underline">Jack McDade</a></div>
+                    <div class="my-4 lg:my-0 text-sm uppercase antialiased lg:mt-1 font-heading opacity-25">&copy; Copyright {{ now format="Y" }} &bull; All Rights Reserved &bull; Site Designed by <a href="https://jackmcdade.com" class="text-white underline">Jack McDade</a></div>
                 </div>
                 <a href="{{ patreon_url }}" class="text-white font-heading uppercase text-lg no-underline">Support me on <span class="text-orange">Patreon</span></a>
             </div>
