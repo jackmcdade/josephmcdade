@@ -1,6 +1,5 @@
 <template>
     <div class="player-container">
-
         <div class="player-track" v-for="(track, index) in tracks" @click="play(index)" :class="{active: isCurrentTrack(index)}">
             <div class="player-track-title" v-text="track.title"></div>
             <div class="player-track-length">{{ track.length }}</div>

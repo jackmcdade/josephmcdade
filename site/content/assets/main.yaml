@@ -11,3 +11,27 @@ assets:
     title: Metal Hammer
     length: 3:04
     batch: "001"
+  music/batch-001/Joseph McDade-Ambient Rock-On The Verge.mp3:
+    title: On the Verge
+    length: 3:12
+    batch: "001"
+  music/batch-001/Joseph McDade-Chill Electronic-Sunrise Expedition.mp3:
+    title: Sunrise Expedition
+    length: 6:38
+    batch: "001"
+  music/batch-001/Joseph McDade-Orchestral Electronic-Olympus.mp3:
+    title: Olympus
+    length: 2:57
+    batch: "001"
+  music/batch-001/Joseph McDade-Synthwave-Barkbot 2000.mp3:
+    title: Barkbot 2000
+    length: 1:54
+    batch: "001"
+  music/batch-001/Joseph McDade-Symphonic Metal-Reforge the Sword.mp3:
+    title: Reforge the Sword
+    length: 3:04
+    batch: "001"
+  music/batch-001/Joseph McDade-Minimal-Beautiful Ann.mp3:
+    title: Beautiful Ann
+    length: 3:47
+    batch: "001"

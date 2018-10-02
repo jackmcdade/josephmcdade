@@ -8,7 +8,7 @@ var colors = {
     'grey-light':    '#E2E2E2',
     'grey-lighter':  '#F6F6F6',
     'grey-lightest': '#FAFAFA',
-    'orange':        '#f96854',
+    'orange':        '#fa7664',
     'blue':          '#1aafff',
     'blue-light':    '#9cd7ff',
 }
@@ -103,6 +103,7 @@ module.exports = {
         'xl':   '40px',
         '2xl':  '60px',
         '3xl':  '70px',
+        '4xl':  '90px',
     },
 
 
@@ -335,6 +336,7 @@ module.exports = {
 
     minHeight: {
         '0':      '0',
+        'tall':   '900px',
         'full':   '100%',
         'screen': '100vh'
     },
@@ -462,6 +464,7 @@ module.exports = {
 
     shadows: {
         default: '0 16px 26px -8px rgba(0,0,0,.15)',
+        'offset': '40px -40px 0 #F6F6F6',
         'lg': '0 15px 40px 15px rgba(0,0,0,.6)',
         'none':  'none',
     },

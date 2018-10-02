@@ -48,7 +48,7 @@ nav a {
         height: 600px;
 
         h1 {
-            @apply ml-6 text-3xl;
+            @apply ml-4 text-xl;
         }
 
         .container {
@@ -68,9 +68,23 @@ nav a {
     }
 }
 
+@screen lg {
+    .hero h1 {
+        @apply .ml-6 .text-3xl;
+    }
+}
+
 .sign {
-    @apply bg-black text-white font-heading uppercase leading-none antialiased inline-block;
+    @apply bg-black text-white font-heading uppercase leading-none antialiased inline-block text-center;
     padding: 10px 24px 6px;
+}
+
+.button {
+    @apply bg-orange text-white inline-block no-underline font-heading uppercase leading-none antialiased inline-block text-center text-xl;
+    padding: 12px 24px 6px;
+    &:hover {
+        @apply .text-white .bg-black;
+    }
 }
 
 .sign-inverted {
@@ -103,7 +117,20 @@ nav a {
     .player-track-length {
         @apply .text-right;
     }
+}
 
+#details-runner {
+    top: 80px;
+    left: 120px;
+    position: absolute;
+    font-size: 300px;
+    line-height: 300px;
+    transform: rotate(90deg);
+    transform-origin: left top 0;
+}
+
+.detail-number {
+    @apply text-4xl font-heading font-bold tracking-tight antialiased text-grey-light;
 }
 
 [v-cloak] {

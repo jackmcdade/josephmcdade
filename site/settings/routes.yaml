@@ -1,4 +1,4 @@
-collections:
-  stuff: '/stuff/{slug}'
+collections: [ ]
 taxonomies:
   category: '/category/{term}'
+routes: [ ]

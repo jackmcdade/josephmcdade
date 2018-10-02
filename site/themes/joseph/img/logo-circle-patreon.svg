@@ -1,32 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
-    <title>logo-circle-patreon</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M5.00544402,0.0332432432 C2.25351351,0.0332432432 0.0146332046,2.27181467 0.0146332046,5.02355212 C0.0146332046,7.76694981 2.25351351,9.99895753 5.00544402,9.99895753 C7.74880309,9.99895753 9.98069498,7.76694981 9.98069498,5.02355212 C9.98069498,2.27181467 7.74880309,0.0332432432 5.00544402,0.0332432432 Z" id="path-1"></path>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Close-to-Final" transform="translate(-1022.000000, -3767.000000)">
-            <g id="Group-6" transform="translate(853.000000, 3567.000000)">
-                <g id="logo-circle-patreon" transform="translate(169.000000, 200.000000)">
-                    <g id="Filled_Icons">
-                        <path d="M16,0 C7.17733333,0 0,7.17733333 0,16 C0,24.8226667 7.17733333,32 16,32 C24.8226667,32 32,24.8226667 32,16 C32,7.17733333 24.8226667,0 16,0 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
-                        <g id="Group" transform="translate(10.000000, 10.000000)">
-                            <path d="M9.00780642,0 C6.24650455,0 4,2.24627294 4,5.00747737 C4,7.76031335 6.24650455,10 9.00780642,10 C11.7605077,10 14,7.76031335 14,5.00747737 C14,2.24627294 11.7605077,0 9.00780642,0" id="Fill-1" fill="#FFFFFE"></path>
-                            <g id="Group-4" transform="translate(4.000000, 0.000000)">
-                                <mask id="mask-2" fill="white">
-                                    <use xlink:href="#path-1"></use>
-                                </mask>
-                                <g id="Clip-3"></g>
-                                <polygon id="Fill-2" fill="#FFFFFE" mask="url(#mask-2)" points="0.0146332046 9.99895753 9.98069498 9.99895753 9.98069498 0.0332432432 0.0146332046 0.0332432432"></polygon>
-                            </g>
-                            <polygon id="Fill-5" fill="#FFFFFE" points="0 14 3 14 3 0 0 0"></polygon>
-                            <polygon id="Fill-6" fill="#FFFFFE" points="0 14 3 14 3 0 0 0"></polygon>
-                        </g>
-                    </g>
-                </g>
-            </g>
-        </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor">
+    <path fill="currentColor" fill-rule="nonzero" d="M16,0 C7.17733333,0 0,7.17733333 0,16 C0,24.8226667 7.17733333,32 16,32 C24.8226667,32 32,24.8226667 32,16 C32,7.17733333 24.8226667,0 16,0 Z"/>
+    <g fill="#ffffff">
+      <path d="M9.00780642,0 C6.24650455,0 4,2.24627294 4,5.00747737 C4,7.76031335 6.24650455,10 9.00780642,10 C11.7605077,10 14,7.76031335 14,5.00747737 C14,2.24627294 11.7605077,0 9.00780642,0" transform="translate(10 10)"/>
+      <path d="M0 14L3 14 3 0 0 0z" transform="translate(10 10)"/>
+      <path d="M0 14L3 14 3 0 0 0z" transform="translate(10 10)"/>
     </g>
 </svg>

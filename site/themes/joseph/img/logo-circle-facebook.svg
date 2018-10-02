@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
-	 height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
-<g id="Filled_Icons">
-	<path d="M12,0C5.383,0,0,5.383,0,12s5.383,12,12,12s12-5.383,12-12S18.617,0,12,0z M15.595,11.5H13.5c0,3.013,0,7,0,7h-3
-		c0,0,0-3.951,0-7h-2v-2h2V8.336c0-1.1,0.352-2.819,2.649-2.819L15.5,5.524V7.83c0,0-1.163,0-1.408,0
-		c-0.244,0-0.592,0.123-0.592,0.647V9.5h2.339L15.595,11.5z"/>
-</g>
-<g id="Frames-24px">
-	<rect fill="none" width="24" height="24"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewbox="0 0 24 24" fill="currentColor"><path d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0zm3.595 11.5H13.5v7h-3v-7h-2v-2h2V8.336c0-1.1.352-2.819 2.649-2.819l2.351.007V7.83h-1.408c-.244 0-.592.123-.592.647V9.5h2.339l-.244 2z"/></svg>
