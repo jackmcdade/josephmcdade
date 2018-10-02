@@ -1,0 +1,13 @@
+sections:
+  main:
+    display: Main
+    fields:
+      sample_tracks:
+        container: main
+        folder: /
+        restrict: false
+        type: assets
+        display: Sample Tracks
+taxonomies: false
+title: Home
+hide: true
