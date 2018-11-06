@@ -1,8 +1,12 @@
 <template>
     <div class="player-container">
-        <div class="player-track" v-for="(track, index) in tracks" @click="play(index)" :class="{active: isCurrentTrack(index)}">
-            <div class="player-track-title" v-text="track.title"></div>
-            <div class="player-track-length">{{ track.length }}</div>
+        <div class="player-track" v-for="(track, index) in tracks" :class="{active: isCurrentTrack(index)}">
+            <div class="player-track-title" v-text="track.title" @click="play(index)"></div>
+            <div class="player-track-genre" v-text="track.genre"></div>
+            <div class="player-track-length" v-text="track.length"></div>
+            <a :href="track.url" download v-if="download" class="pl-3 flex items-center opacity-50 hover:opacity-100">
+                <img src="/assets/img/audio-file-download.svg" alt="Download" height="24" width="24">
+            </a>
         </div>
         <vue-plyr
             @player="initPlayer"
@@ -18,7 +22,13 @@
 import 'vue-plyr'
 
 export default {
-    props: ['tracks'],
+    props: {
+        tracks: Array,
+        download: {
+            type: Boolean,
+            default: false
+        }
+    },
 
     data: () => ({
         currentTrackIndex: 0,

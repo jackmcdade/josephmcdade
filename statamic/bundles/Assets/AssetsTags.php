@@ -99,7 +99,7 @@ class AssetsTags extends Tags
         $this->limit();
 
         if ($as = $this->get('as')) {
-            return [$as => $this->assets->toArray()];
+            return $this->parse([$as => $this->assets]);
         }
 
         return $this->parseLoop($this->assets);

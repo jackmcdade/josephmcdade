@@ -1,0 +1,23 @@
+title: Batches
+sections:
+  main:
+    display: Main
+    fields:
+      tracks:
+        container: main
+        folder: music
+        restrict: false
+        mode: list
+        type: assets
+        display: Tracks
+      release_date:
+        allow_blank: false
+        allow_time: true
+        require_time: false
+        earliest_date: January 1, 1900
+        type: date
+        display: Release Date
+      download_url:
+        type: text
+        display: Download URL
+taxonomies: false

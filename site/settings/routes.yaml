@@ -1,4 +1,5 @@
 collections: [ ]
 taxonomies:
   category: '/category/{term}'
+  genre: '/music/genres/{slug}'
 routes: [ ]

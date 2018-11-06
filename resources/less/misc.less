@@ -96,13 +96,12 @@ nav a {
     @apply font-heading font-bold antialiased bg-white shadow;
 
     .player-track {
-        @apply cursor-pointer border-b flex items-center justify-between;
+        @apply border-b flex items-center;
         padding: 22px 24px 14px;
 
-        &:hover {
-            .player-track-title {
-                padding-left: 4px;
-            }
+        .player-track-title:hover {
+            @apply cursor-pointer;
+            padding-left: 4px;
         }
 
         &.active {
@@ -112,10 +111,16 @@ nav a {
 
     .player-track-title {
         transition: all .15s ease-in-out;
+        width: 50%;
+    }
+
+    .player-track-genre {
+        @apply flex-1 text-left text-sm text-grey;
     }
 
     .player-track-length {
         @apply .text-right;
+        width: 60px;
     }
 }
 

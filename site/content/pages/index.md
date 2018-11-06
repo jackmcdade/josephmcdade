@@ -1,9 +1,9 @@
 sample_tracks:
-  - /assets/music/batch-001/Joseph McDade-Symphonic Metal-Reforge the Sword.mp3
-  - /assets/music/batch-001/Joseph McDade-Minimal-Beautiful Ann.mp3
-  - /assets/music/batch-001/Joseph McDade-Orchestral Electronic-Olympus.mp3
-  - /assets/music/batch-001/Joseph McDade-Ambient Rock-On The Verge.mp3
-  - /assets/music/batch-001/Joseph McDade-Synthwave-Barkbot 2000.mp3
+  - /assets/music/batch-002/Joseph McDade-Backplate.mp3
+  - /assets/music/batch-001/Joseph McDade-Reforge the Sword.mp3
+  - /assets/music/batch-001/Joseph McDade-On The Verge.mp3
+  - /assets/music/batch-002/Joseph McDade-Glacial Waves.mp3
+  - /assets/music/batch-002/Joseph McDade-Elevation.mp3
 title: Home
 template: home
 fieldset: home
@@ -17,5 +17,5 @@ links:
   -
     name: Bandcamp
     url: https://josephmcdade.bandcamp.com
-tagline: "Hello! I'm Joseph and I create piles of"
+tagline: I'm Joseph and I want you to use my
 id: 547baf65-7290-4542-8e1a-187ce7ce08d2

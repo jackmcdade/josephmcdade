@@ -12,11 +12,11 @@
         <img src="/assets/img/keyboard.jpg" alt="A keyboard, for decorative purposes" id="keyboard" class="absolute hidden lg:block" style="left: -440px; top: 600px; z-index: -1;" width="600">
         <div class="md:flex mb-4 md:mb-8">
             <div class="md:w-1/2 md:pr-6">
-                <div class="sign">My current focus</div>
+                <div class="sign">This is what I do</div>
                 <h2 class="my-5">I create totally free music for creators</h2>
-                <p>The current state of music licensing and monitization is abysmal and quite frankly, unsustainable. I’m cutting out the crap, creating the best music I can, and giving it away for anyone to use for any purpose.</p>
-                <p>Got a podcast or YouTube channel? Do you livestream? Making screencasts, indy movies, or video games? Go ahead, use my music. I made it for folks just for you. If you choose to support me and my efforts on Patreon, you'll even get access to <strong>bonus tracks</strong> every month.</p>
-                <h4><a href="{{ patreon_url }}">Explore & Download My Music</a></h4>
+                <p>The current state of music licensing and monitization is abysmal and quite frankly, unsustainable. I’m cutting out the crap, creating the best music I can, and giving it away for anyone to use for <strong>any purpose</strong>.</p>
+                <p>Got a podcast or YouTube channel? Do you livestream? Making screencasts, indy movies, or video games? Go ahead, use my music. If you choose to support me on Patreon, you can get access to <strong>variations, alternate lengths, loops, and bonus tracks</strong> every month.</p>
+                <h4><a href="/music">Explore & Download My Music</a></h4>
             </div>
             <div class="md:w-1/2 pt-4">
                 <img src="/assets/img/joseph-on-stage.jpg" alt="Joseph on Stage" width="540" class="md:mt-8">
@@ -24,7 +24,7 @@
         </div>
         <div class="player md:w-120 relative mx-auto z-10" id="home-player">
             <div class="text-center py-2 text-heading text-sm border-b bg-grey-lightest">
-                Go ahead and sample the goods!
+                Check out a few full-length samples!
             </div>
             {{ assets:sample_tracks as="tracks" }}
                 <player :tracks='{{ tracks | json }}'></player>
@@ -38,7 +38,7 @@
         <img src="{{ theme:img src="left-quote.svg" }}" class="mr-5 hidden md:block">
     </div>
     <blockquote class="md:border-l-8 border-black md:pl-5 py-2">
-        <div class="font-bold italic md:w-120 leading-normal">Joseph’s ability to crank out truly fantastic, original music is so rare these days. It's about time someone changed the way music is licensed. We need to support this guy!</div>
+        <div class="font-bold italic md:w-120 leading-normal">Joseph’s ability to crank out truly fantastic, original music is impressive. It's about time someone changed the way music is licensed.</div>
         <cite class="text-grey text-sm font-heading roman mt-3 block antialiased">&mdash; Jack M, Founder & Designer @ Wilderborn</cite>
     </blockquote>
 </div>

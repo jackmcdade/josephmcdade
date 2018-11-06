@@ -3,35 +3,58 @@ path: assets
 url: /assets
 fieldset: assets
 assets:
-  music/batch-001/joseph-mcdade--batch-001--beautiful-ann.mp3:
-    title: Beautiful Ann
-    length: 3:47
-    batch: "001"
-  music/batch-001/joseph-mcdade--batch-001--metal-hammer.mp3:
-    title: Metal Hammer
-    length: 3:04
-    batch: "001"
-  music/batch-001/Joseph McDade-Ambient Rock-On The Verge.mp3:
+  music/batch-001/Joseph McDade-On The Verge.mp3:
     title: On the Verge
+    batch: "001"
+    genre: ambient-rock
     length: 3:12
-    batch: "001"
-  music/batch-001/Joseph McDade-Chill Electronic-Sunrise Expedition.mp3:
+  music/batch-001/Joseph McDade-Sunrise Expedition.mp3:
     title: Sunrise Expedition
+    batch: "001"
+    genre: chill-electronic
     length: 6:38
-    batch: "001"
-  music/batch-001/Joseph McDade-Orchestral Electronic-Olympus.mp3:
+  music/batch-001/Joseph McDade-Olympus.mp3:
     title: Olympus
+    batch: "001"
+    genre: orchestral-electronic
     length: 2:57
-    batch: "001"
-  music/batch-001/Joseph McDade-Synthwave-Barkbot 2000.mp3:
+  music/batch-001/Joseph McDade-Barkbot 2000.mp3:
     title: Barkbot 2000
+    batch: "001"
+    genre: synthwave
     length: 1:54
-    batch: "001"
-  music/batch-001/Joseph McDade-Symphonic Metal-Reforge the Sword.mp3:
+  music/batch-001/Joseph McDade-Reforge the Sword.mp3:
     title: Reforge the Sword
+    batch: "001"
+    genre: symphonic-metal
     length: 3:04
-    batch: "001"
-  music/batch-001/Joseph McDade-Minimal-Beautiful Ann.mp3:
+  music/batch-001/Joseph McDade-Beautiful Ann.mp3:
     title: Beautiful Ann
-    length: 3:47
     batch: "001"
+    genre: mimimal
+    length: 3:47
+  music/batch-002/Joseph McDade-Backplate.mp3:
+    title: Backplate
+    batch: "002"
+    genre: electro-groove
+    length: 3:17
+  music/batch-002/Joseph McDade-Drifting Korners.mp3:
+    title: Drifting Korners
+    batch: "002"
+    genre: retro-electro
+    length: 1:20
+  music/batch-002/Joseph McDade-Elevation.mp3:
+    title: Elevation
+    batch: "002"
+    genre: ambient-rock
+    length: 3:15
+  music/batch-002/Joseph McDade-Glacial Waves.mp3:
+    title: Glacial Waves
+    batch: "002"
+    genre: moody-cinematic
+    length: 1:28
+  music/batch-002/Joseph McDade-The Tavern.mp3:
+    title: The Tavern
+    batch: "002"
+    genre: medieval-folk
+    length: 1:27

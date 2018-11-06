@@ -1,8 +1,18 @@
 title: Assets
-fields:
-  title:
-    type: text
-  length:
-    type: text
-  batch:
-    type: text
+sections:
+  main:
+    display: Main
+    fields:
+      title:
+        type: text
+        localizable: true
+      batch:
+        type: text
+      genre:
+        type: taxonomy
+        taxonomy: genre
+        max_items: 1
+        mode: tags
+      length:
+        type: text
+taxonomies: true
