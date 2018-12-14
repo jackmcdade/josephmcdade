@@ -58,3 +58,18 @@ assets:
     batch: "002"
     genre: medieval-folk
     length: 1:27
+  music/batch-003/Joseph McDade-Late Night.mp3:
+    title: Late Night (Loops)
+    batch: "003"
+    genre: chill
+    length: 4:07
+  music/batch-003/Joseph McDade-Silent Jam.mp3:
+    title: Silent Jam
+    batch: "003"
+    genre: chill-christmas
+    length: 4:07
+  music/batch-003/Joseph McDade-Natural Duality.mp3:
+    title: Natural Duality (Theme)
+    batch: "003"
+    genre: electro-metal
+    length: 0:20

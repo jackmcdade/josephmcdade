@@ -3,7 +3,7 @@ sections:
   main:
     display: Main
     fields:
-      tracks:
+      batch_tracks:
         container: main
         folder: music
         restrict: false
