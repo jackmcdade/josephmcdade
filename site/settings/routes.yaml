@@ -3,4 +3,4 @@ taxonomies:
   category: '/category/{term}'
   genre: '/music/genres/{slug}'
 routes:
-  /music/{batch}/{track}: track
+  /music/{track}: track

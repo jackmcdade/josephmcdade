@@ -3,73 +3,118 @@ path: assets
 url: /assets
 fieldset: assets
 assets:
-  music/batch-001/Joseph McDade-On The Verge.mp3:
+  music/Joseph McDade-On The Verge.mp3:
     title: On the Verge
     batch: "001"
     genre: ambient-rock
     length: 3:12
-  music/batch-001/Joseph McDade-Sunrise Expedition.mp3:
+  music/Joseph McDade-Sunrise Expedition.mp3:
     title: Sunrise Expedition
     batch: "001"
     genre: chill-electronic
     length: 6:38
-  music/batch-001/Joseph McDade-Olympus.mp3:
+  music/Joseph McDade-Olympus.mp3:
     title: Olympus
     batch: "001"
     genre: orchestral-electronic
     length: 2:57
-  music/batch-001/Joseph McDade-Barkbot 2000.mp3:
+  music/Joseph McDade-Barkbot 2000.mp3:
     title: Barkbot 2000
     batch: "001"
     genre: synthwave
     length: 1:54
-  music/batch-001/Joseph McDade-Reforge the Sword.mp3:
+  music/Joseph McDade-Reforge the Sword.mp3:
     title: Reforge the Sword
     batch: "001"
     genre: symphonic-metal
     length: 3:04
-  music/batch-001/Joseph McDade-Beautiful Ann.mp3:
+  music/Joseph McDade-Beautiful Ann.mp3:
     title: Beautiful Ann
     batch: "001"
     genre: mimimal
     length: 3:47
-  music/batch-002/Joseph McDade-Backplate.mp3:
+  music/Joseph McDade-Backplate.mp3:
     title: Backplate
     batch: "002"
     genre: electro-groove
     length: 3:17
-  music/batch-002/Joseph McDade-Drifting Korners.mp3:
+  music/Joseph McDade-Drifting Korners.mp3:
     title: Drifting Korners
     batch: "002"
     genre: retro-electro
     length: 1:20
-  music/batch-002/Joseph McDade-Elevation.mp3:
+  music/Joseph McDade-Elevation.mp3:
     title: Elevation
     batch: "002"
     genre: ambient-rock
     length: 3:15
-  music/batch-002/Joseph McDade-Glacial Waves.mp3:
+  music/Joseph McDade-Glacial Waves.mp3:
     title: Glacial Waves
     batch: "002"
     genre: moody-cinematic
     length: 1:28
-  music/batch-002/Joseph McDade-The Tavern.mp3:
+  music/Joseph McDade-The Tavern.mp3:
     title: The Tavern
     batch: "002"
     genre: medieval-folk
     length: 1:27
-  music/batch-003/Joseph McDade-Late Night.mp3:
+  music/Joseph McDade-Late Night.mp3:
     title: Late Night (Loops)
     batch: "003"
     genre: chill
     length: 4:07
-  music/batch-003/Joseph McDade-Silent Jam.mp3:
+  music/Joseph McDade-Silent Jam.mp3:
     title: Silent Jam
     batch: "003"
     genre: chill-christmas
     length: 4:07
-  music/batch-003/Joseph McDade-Natural Duality.mp3:
+  music/Joseph McDade-Natural Duality.mp3:
     title: Natural Duality (Theme)
     batch: "003"
     genre: electro-metal
     length: 0:20
+  music/Joseph McDade-Lectro Tango.mp3:
+    title: Lectro Tango
+    batch: "004"
+    genre: crossover
+    length: 1:57
+  music/Joseph McDade-Mirrors.mp3:
+    title: Mirrors
+    batch: "007"
+    genre: ambient-rock
+    length: 4:33
+  music/Joseph McDade-Moving Mountains.mp3:
+    title: Moving Mountains
+    batch: "004"
+    genre: inspirational-rock
+    length: 6:05
+  music/Joseph McDade-Once is Enough.mp3:
+    title: Once is Enough
+    batch: "004"
+    genre: heavy-rock
+    length: 0:20
+  music/Joseph McDade-Quiet Calculation.mp3:
+    title: Quiet Calculation
+    batch: "004"
+    genre: lofi
+    length: 4:24
+  music/Joseph McDade-Smoke.mp3:
+    title: Smoke
+    batch: "007"
+    genre: ambient-rock
+    length: 5:37
+  music/Joseph McDade-Space Is Invisible Mind Dust And Stars Are But Wishes.mp3:
+    title: Space Is Invisible Mind Dust And Stars Are But Wishes
+    batch: "006"
+    genre: weird
+    length: 4:58
+  music/Joseph McDade-Sundown.mp3:
+    title: Sundown
+    batch: "004"
+    genre: ironic-smooth-jazz
+    length: 1:42
+  music/Joseph McDade-Winter's Mist.mp3:
+    title: "Winter's Mist"
+    batch: "005"
+    genre: minimal
+    length: 3:36

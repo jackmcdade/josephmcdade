@@ -3,7 +3,7 @@
         <div class="player-track" v-for="(track, index) in tracks" :class="{active: isCurrentTrack(index)}">
             <div class="player-track-title" v-text="track.title" @click="play(index)"></div>
             <div class="player-track-genre" v-text="track.genre"></div>
-            <a :href="'/music/batch-'+ track.batch +'/'+ slugify(track.title)" v-if="link" class="pl-3 flex items-center opacity-50 hover:opacity-100">
+            <a :href="'/music/'+ slugify(track.title)" v-if="link" class="pl-3 flex items-center opacity-50 hover:opacity-100">
                 <img src="/assets/img/hyperlink.svg" alt="Link" height="24" width="24">
             </a>
             <a :href="track.url" download v-if="download" class="pl-3 flex items-center opacity-50 hover:opacity-100">
