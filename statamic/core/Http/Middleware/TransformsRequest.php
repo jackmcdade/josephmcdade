@@ -22,13 +22,10 @@ class TransformsRequest
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  array  ...$attributes
      * @return mixed
      */
-    public function handle($request, Closure $next, ...$attributes)
+    public function handle($request, Closure $next)
     {
-        $this->attributes = $attributes;
-
         $this->clean($request);
 
         return $next($request);

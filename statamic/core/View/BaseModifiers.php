@@ -596,10 +596,13 @@ class BaseModifiers extends Modifier
         }
 
         // If the requested value (it should be an ID) doesn't exist, we'll just
-        // spit the value back as-is. This seems like a sensible solution here.
-        if (! $item = Data::find($value)->in(site_locale())) {
+        // send the value back as-is.
+        if (! $item = Data::find($value)) {
             return $value;
         }
+
+        // Localize the data
+        $item = $item->in(site_locale());
 
         // Get the requested variable, which is the first parameter.
         $var = array_get($params, 0);
@@ -1686,6 +1689,14 @@ class BaseModifiers extends Modifier
      */
     public function sort($value, $params)
     {
+        $has_pipe = ! collect($params)->filter(function ($param) {
+            return Str::contains($param, '|');
+        })->isEmpty();
+
+        if ($has_pipe) {
+            return $this->multisort($value, collect($params)->implode(':'));
+        }
+
         $key = array_get($params, 0);
         $is_descending = strtolower(array_get($params, 1)) == 'desc';
 
@@ -1700,6 +1711,38 @@ class BaseModifiers extends Modifier
         }
 
         return collect($value)->sortBy($key, SORT_REGULAR, $is_descending)->values()->toArray();
+    }
+
+    /**
+     * Sort by multiple fields
+     *
+     * Accepts a string like "title:desc|foo:asc"
+     * The keys are optional. "title:desc|foo" is fine.
+     *
+     * @param string $sort
+     * @return static
+     */
+    protected function multisort($arr, $sort)
+    {
+        $sorts = explode('|', $sort);
+
+        usort($arr, function ($a, $b) use ($sorts) {
+            foreach ($sorts as $sort) {
+                $bits = explode(':', $sort);
+                $sort_by = $bits[0];
+                $sort_dir = array_get($bits, 1, 'asc');
+
+                $result = Helper::compareValues($a[$sort_by], $b[$sort_by]);
+
+                if ($result !== 0) {
+                    return ($sort_dir === 'desc') ? $result * -1 : $result;
+                }
+            }
+
+            return 0;
+        });
+
+        return $arr;
     }
 
     /**
@@ -2053,13 +2096,11 @@ class BaseModifiers extends Modifier
             $value = array_get($value, 0);
         }
 
-        if (! $item = Asset::find($value)) {
-            if (! $item = Content::find($value)->in(site_locale())) {
-                return $value;
-            }
+        if (! $item = Content::find($value)) {
+            return $value;
         }
 
-        return $item->url();
+        return $item->in(site_locale())->url();
     }
 
     /**

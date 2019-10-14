@@ -118,3 +118,29 @@ assets:
     batch: "005"
     genre: minimal
     length: 3:36
+  music/other/joseph-mcdade-doing-it-anyway.mp3:
+    title: Doing It Anyway
+    genre: synthwave
+    length: :025
+  img/editing-example---break-the-mold-drum-tracks.png:
+    description: "Editing is best demonstrated with a visual aid, so here's a screenshot of the drum tracks for Break the Mold. That was a really good take too."
+  music/other/mixing-example---break-the-mold.mp3:
+    title: Break the Mold
+    genre: heavy-rock
+    length: 5:06
+  music/other/mastering-example---in-your-hands-(mastered).mp3:
+    title: In Your Hands – Mastered
+    genre: rock
+    length: 6:04
+  music/other/mastering-example---in-your-hands-(unmastered).mp3:
+    title: In Your Hands – Unmastered
+    genre: rock
+    length: 6:04
+  music/other/producing-example---missing-you-(final).mp3:
+    title: Missing You – Final
+    genre: rock
+    length: 3:32
+  music/other/producing-example---missing-you-(demo).mp3:
+    title: Missing You – Demo
+    genre: rock
+    length: 1:21

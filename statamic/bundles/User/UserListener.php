@@ -133,7 +133,7 @@ class UserListener extends Listener
         ]);
 
         if ($validator->fails()) {
-            return back()->withInput()->withErrors($validator);
+            return back()->withInput()->withErrors($validator, 'userLogin');
         }
 
         $logged_in = Auth::login(
@@ -143,7 +143,7 @@ class UserListener extends Listener
         );
 
         if (! $logged_in) {
-            return back()->withInput()->withErrors(t('invalid_creds'));
+            return back()->withInput()->withErrors(t('invalid_creds'), 'userLogin');
         }
 
         $redirect = Request::input('redirect', '/');
@@ -165,7 +165,7 @@ class UserListener extends Listener
         $validator = $registrar->validator();
 
         if ($validator->fails()) {
-            return back()->withInput()->withErrors($validator);
+            return back()->withInput()->withErrors($validator, 'userRegister');
         }
 
         $user = $registrar->create();

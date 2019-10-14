@@ -6,5 +6,5 @@ use Statamic\Extend\Fieldtype;
 
 class BardButtonsSettingFieldtype extends Fieldtype
 {
-    public $category = [];
+    public $selectable = false;
 }

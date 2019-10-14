@@ -12745,6 +12745,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: Boolean,
             default: false
         },
+        genre: {
+            type: Boolean,
+            default: true
+        },
         link: {
             type: Boolean,
             default: false

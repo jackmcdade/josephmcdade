@@ -1,0 +1,22 @@
+<div class="container max-w-lg text-center pt-8">
+    <h1 class="mb-2">Hire My Services</h1>
+    <p>My services and skills are available for hire. I can work remotely, have availability, and can turn projects around quickly. <a href="mailto:joseph@josephmcdade.com" class="text-orange hover:text-black">Get in touch!</a></p>
+</div>
+
+
+<div class="container py-7 relative">
+    <div class="max-w-xl mx-auto flex flex-wrap z-10 bg-white relative border-4 border-b-0 border-black">
+        {{ pages }}
+        <div class="w-full lg:w-1/2 p-4 lg:p-6 border-b-4 border-black {{ switch between="lg:border-r-4|border-r-0" }}">
+            <h2 class="mb-3"><a href="{{ url }}" class="no-underline text-black">{{ title }}</a></h2>
+            {{ summary | markdown }}
+            <h4><a href="{{ url }}" class="text-orange hover:text-black">Hear More</a></h4>
+        </div>
+        {{ /pages }}
+    </div>
+
+    <img src="/assets/img/just-picks.jpg" class="absolute hidden lg:block pin-r pin-b z-1" height="202px" width="169"
+        alt="Just two guitar picks. Nothing to see really." style="bottom: 300px">
+    <img src="/assets/img/keyboard.jpg" alt="A keyboard, for decorative purposes" id="keyboard"
+        class="absolute hidden lg:block" style="left: -480px; top: 200px; z-index: -1;" width="600">
+</div>

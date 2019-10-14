@@ -1,0 +1,21 @@
+<div class="mt-8 md:pb-8 relative">
+    <div class="container max-w-xl relative">
+        <img src="/assets/img/keyboard.jpg" alt="A keyboard, for decorative purposes" id="keyboard"
+            class="absolute hidden lg:block" style="right: -400px; top: 50px; z-index: -1;" width="600">
+        <div class="md:flex items-start mb-4">
+            <div class="max-w-md mb-7 md:pr-7">
+                <h1 class="sign text-lg">Hire My Services</h1>
+                <h2 class="my-5">{{ title }}</h2>
+                {{ content }}
+            </div>
+            <div class="player md:w-120 mt-7 relative mx-auto z-10">
+                <div class="text-center py-2 text-heading text-sm border-b bg-grey-lightest">
+                    Example
+                </div>
+                {{ assets:example as="tracks" }}
+                <player :tracks='{{ tracks | json }}'></player>
+                {{ /assets:example }}
+            </div>
+        </div>
+    </div>
+</div>

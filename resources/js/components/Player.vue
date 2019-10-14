@@ -31,6 +31,10 @@ export default {
             type: Boolean,
             default: false
         },
+        genre: {
+            type: Boolean,
+            default: true
+        },
         link: {
             type: Boolean,
             default: false

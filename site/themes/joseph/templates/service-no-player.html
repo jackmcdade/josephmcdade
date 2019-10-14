@@ -1,0 +1,19 @@
+<div class="mt-8 md:pb-8 relative">
+    <div class="container max-w-xl relative">
+        <img src="/assets/img/keyboard.jpg" alt="A keyboard, for decorative purposes" id="keyboard"
+            class="absolute hidden lg:block" style="right: -400px; top: 50px; z-index: -1;" width="600">
+        <div class="md:flex items-start mb-4">
+            <div class="max-w-md mb-7 md:pr-7">
+                <h1 class="sign text-lg">Hire My Services</h1>
+                <h2 class="my-5">{{ title }}</h2>
+                {{ content }}
+            </div>
+            <div class="md:w-120">
+                {{ assets:example }}
+                    <a href="{{ url }}" target="_blank"><img src="{{ url }}" alt="Joseph in Ireland" class="shadow-offset" alt="{{ description }}"></a>
+                    <p class="mt-1 text-xs italic text-black">{{ description }}</p>
+                {{ /assets:example }}
+            </div>
+        </div>
+    </div>
+</div>

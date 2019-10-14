@@ -181,6 +181,8 @@
 
                 const editor = this.editor.el;
 
+                editor.setAttribute('contenteditable', false);
+
                 let firstAdded = false;
 
                 Array.from(editor.children).forEach(child => {
@@ -237,10 +239,12 @@
                 const els = this.editor.el.getElementsByClassName('bard-drop-area');
                 Array.from(els).forEach(el => el.remove());
                 this.text = this.editor.getContent();
+                this.editor.el.setAttribute('contenteditable', true);
             },
             initScribe() {
                 this.editor = new ScribeEditor(this.field);
 
+                this.editor.use(ScribeHeadingCommand(1));
                 this.editor.use(ScribeHeadingCommand(2));
                 this.editor.use(ScribeHeadingCommand(3));
                 this.editor.use(ScribeHeadingCommand(4));
@@ -265,6 +269,7 @@
                         ul: {},
                         li: {},
                         a: { href: true, target: true, rel: true },
+                        h1: {},
                         h2: {},
                         h3: {},
                         h4: {},

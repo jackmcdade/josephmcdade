@@ -15,4 +15,6 @@ sections:
         mode: tags
       length:
         type: text
+      description:
+        type: text
 taxonomies: true

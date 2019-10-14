@@ -1,0 +1,26 @@
+sections:
+  main:
+    display: Main
+    fields:
+      summary:
+        cheatsheet: false
+        restrict_assets: false
+        type: markdown
+        display: Summary
+      content:
+        cheatsheet: false
+        restrict_assets: false
+        type: markdown
+        display: Content
+      template:
+        type: template
+        display: Template
+        default: service
+      example:
+        container: main
+        folder: music
+        mode: list
+        type: assets
+        display: Example File
+taxonomies: false
+title: Service
