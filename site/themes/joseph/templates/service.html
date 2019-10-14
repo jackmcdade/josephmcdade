@@ -8,13 +8,18 @@
                 <h2 class="my-5">{{ title }}</h2>
                 {{ content }}
             </div>
-            <div class="player md:w-120 mt-7 relative mx-auto z-10">
-                <div class="text-center py-2 text-heading text-sm border-b bg-grey-lightest">
-                    Example
+            <div class="md:w-120">
+                <div class="player w-full mt-7 relative mx-auto z-10">
+                    <div class="text-center py-2 text-heading text-sm border-b bg-grey-lightest">
+                        Example
+                    </div>
+                    {{ assets:example as="tracks" }}
+                    <player :tracks='{{ tracks | json }}'></player>
+                    {{ /assets:example }}
                 </div>
-                {{ assets:example as="tracks" }}
-                <player :tracks='{{ tracks | json }}'></player>
-                {{ /assets:example }}
+                {{ if caption }}
+                <p class="mt-2 ml-2 text-xs italic text-black">{{ caption }}</p>
+                {{ /if }}
             </div>
         </div>
     </div>
