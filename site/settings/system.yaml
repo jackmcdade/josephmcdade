@@ -1,10 +1,12 @@
-app_key: oYCTc635W6JFOge56NmLHxot3e3nurLI
-license_key: ""
+license_key: 9dd087b9-3180-4c74-a1be-de0d3307d4ab
+locales:
+  en:
+    name: English
+    full: en_US
+    url: /
 timezone: UTC
 date_format: F jS, Y
 default_extension: md
-send_powered_by_header: true
-ensure_unique_ids: false
 filesystems:
   content:
     driver: local
@@ -19,6 +21,7 @@ filesystems:
     driver: local
     root: site/themes
     url: /site/themes
+app_key: oYCTc635W6JFOge56NmLHxot3e3nurLI
 redactor:
   - 
     name: Standard
@@ -37,10 +40,6 @@ redactor:
       buttons:
         - bold
         - italic
-csrf_exclude: [ ]
-php_max_memory_limit: null
-locales:
-  en:
-    name: English
-    full: en_US
-    url: /
+send_powered_by_header: true
+ensure_unique_ids: false
+yaml_parser: spyc
