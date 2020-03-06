@@ -23,7 +23,7 @@
                 </button>
             </div>
         </nav>
-        <div class="mobile-nav" v-show="navOpen">
+        <div class="mobile-nav" v-show="navOpen" v-cloak>
             {{ partial:links }}
         </div>
         {{ template_content }}

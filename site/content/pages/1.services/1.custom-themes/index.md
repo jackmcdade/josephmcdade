@@ -1,7 +1,7 @@
 ---
 summary: |
   Need a short and punchy theme song for your podcast, YouTube channel, tv show, or video project? Tired of generic stock music or spending hours scrolling pages in music databases? No worries, I got you covered. I can create exactly what you're looking for.
-  
+
   I specialize in 15-30 second custom and exclusive bumpers and stings in a variety of styles in order to make your project stand out.
 template: service
 example:
