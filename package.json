@@ -1,12 +1,12 @@
 {
   "devDependencies": {
     "less": "^2.7.3",
-    "less-loader": "^4.0.5"
+    "less-loader": "^4.1.0"
   },
   "dependencies": {
     "laravel-mix": "^1.7.2",
     "tailwindcss": "^0.6.5",
-    "vue": "^2.5.17",
+    "vue": "^2.6.11",
     "vue-plyr": "^4.0.0"
   },
   "scripts": {

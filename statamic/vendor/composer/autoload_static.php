@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b
+class ComposerStaticInitb6c49246a84e99fb2600505d01c9d9f7
 {
     public static $files = array (
         '95a22d2145ae40de20dc7ea7be07a610' => __DIR__ . '/../..' . '/bootstrap/helpers.php',
@@ -85,6 +85,7 @@ class ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b
         'M' => 
         array (
             'Monolog\\' => 8,
+            'Michelf\\' => 8,
         ),
         'L' => 
         array (
@@ -282,6 +283,10 @@ class ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'Michelf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/michelf/php-markdown/Michelf',
+        ),
         'League\\OAuth1\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/oauth1-client/src',
@@ -408,8 +413,7 @@ class ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b
         array (
             'Michelf' => 
             array (
-                0 => __DIR__ . '/..' . '/michelf/php-markdown',
-                1 => __DIR__ . '/..' . '/michelf/php-smartypants',
+                0 => __DIR__ . '/..' . '/michelf/php-smartypants',
             ),
         ),
         'J' => 
@@ -2934,6 +2938,7 @@ class ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b
         'Statamic\\Config\\Globals' => __DIR__ . '/../..' . '/core/Config/Globals.php',
         'Statamic\\Config\\Roles' => __DIR__ . '/../..' . '/core/Config/Roles.php',
         'Statamic\\Config\\Settings' => __DIR__ . '/../..' . '/core/Config/Settings.php',
+        'Statamic\\Console\\Application' => __DIR__ . '/../..' . '/core/Console/Application.php',
         'Statamic\\Console\\Commands\\AbstractCommand' => __DIR__ . '/../..' . '/core/Console/Commands/AbstractCommand.php',
         'Statamic\\Console\\Commands\\Assets\\AssetsFindCommand' => __DIR__ . '/../..' . '/core/Console/Commands/Assets/AssetsFindCommand.php',
         'Statamic\\Console\\Commands\\Assets\\AssetsGeneratePresetsCommand' => __DIR__ . '/../..' . '/core/Console/Commands/Assets/AssetsGeneratePresetsCommand.php',
@@ -4022,11 +4027,11 @@ class ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit5390dda57ffa7bbe1cedd8c746ccc40b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb6c49246a84e99fb2600505d01c9d9f7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb6c49246a84e99fb2600505d01c9d9f7::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitb6c49246a84e99fb2600505d01c9d9f7::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitb6c49246a84e99fb2600505d01c9d9f7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitb6c49246a84e99fb2600505d01c9d9f7::$classMap;
 
         }, null, ClassLoader::class);
     }

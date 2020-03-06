@@ -602,6 +602,12 @@ textarea::-webkit-input-placeholder {
   opacity: .5;
 }
 
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: inherit;
+  opacity: .5;
+}
+
 input::-ms-input-placeholder,
 textarea::-ms-input-placeholder {
   color: inherit;
@@ -731,6 +737,28 @@ body {
 nav a {
   color: #21252b;
   text-decoration: none;
+}
+
+.mobile-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.mobile-nav a {
+  width: 100%;
+  border-top-width: 1px;
+  padding: 16px;
+  border-color: #21252b;
+  border-top-width: 2px;
+  text-decoration: none;
+}
+
+.mobile-nav a:hover {
+  background-color: #21252b;
+  color: #fff;
 }
 
 .mix-overlay {

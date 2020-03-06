@@ -9,4 +9,16 @@ new Vue({
     components: {
         Player: require('./components/Player.vue'),
     },
+
+    data() {
+        return {
+            navOpen: false
+        }
+    },
+
+    methods: {
+        toggleNav() {
+            this.navOpen = !this.navOpen
+        }
+    }
 });
