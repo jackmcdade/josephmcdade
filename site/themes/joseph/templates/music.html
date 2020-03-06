@@ -13,7 +13,7 @@
                 Free Music Tracks
             </div>
             {{ assets container="main" folder="music" as="tracks" }}
-                <player :tracks='{{ tracks | json | sanitize }}' :download="true" :link="true"></player>
+                <player :tracks='{{ tracks | json }}' :download="true" :link="true"></player>
             {{ /assets }}
         </div>
     </div>
