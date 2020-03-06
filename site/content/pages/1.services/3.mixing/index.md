@@ -7,6 +7,7 @@ summary: >
 template: service
 example:
   - /assets/music/other/mixing-example---break-the-mold.mp3
+  - /assets/music/In the Valley-Closed Eyes.mp3
 title: Mixing
 fieldset: service
 id: ef8e291c-3bba-457b-8934-f5d4db5d4949

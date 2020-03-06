@@ -6,6 +6,7 @@ summary: >
 template: service
 example:
   - /assets/music/Joseph McDade-On The Verge.mp3
+  - /assets/music/Joseph McDade-Wasteland.mp3
 title: Custom Background Music
 fieldset: service
 id: 6b2eae7e-21b6-45ed-8431-1684736a24f3

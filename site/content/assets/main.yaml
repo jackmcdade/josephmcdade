@@ -146,3 +146,11 @@ assets:
     length: 1:21
   img/joseph-on-stage-with-smoke.jpg:
     focus: 59-13
+  music/Joseph McDade-Wasteland.mp3:
+    title: Wasteland
+    genre: electronic-cinematic
+    length: 3:41
+  music/In the Valley-Closed Eyes.mp3:
+    title: Closed Eyes
+    genre: indie-pop
+    length: 3:55
