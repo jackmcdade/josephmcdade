@@ -7,7 +7,7 @@ template: service
 example:
   - /assets/music/other/joseph-mcdade-doing-it-anyway.mp3
   - /assets/music/Joseph McDade-Get Pumped.mp3
-  - /assets/music/Joseph McDade-Scoundrels and Thieves.mp3
+  - /assets/music/other/Joseph McDade-Scoundrels and Thieves.mp3
 title: Custom Themes
 external_url: https://themesong.studio
 fieldset: service
