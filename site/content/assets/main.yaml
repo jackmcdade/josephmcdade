@@ -150,10 +150,6 @@ assets:
     title: Wasteland
     genre: electronic-cinematic
     length: 3:41
-  music/Joseph McDade-Get Pumped.mp3:
-    title: Get Pumped
-    genre: 80s-montage-glory
-    length: 0:26
   music/other/In the Valley-Closed Eyes.mp3:
     title: Closed Eyes
     genre: indie-pop
@@ -162,3 +158,7 @@ assets:
     title: 'Scoundrels & Thieves'
     genre: electro-pop
     length: 0:40
+  music/other/Joseph McDade-Get Pumped.mp3:
+    title: Get Pumped
+    genre: 80s-montage-glory
+    length: 0:26
