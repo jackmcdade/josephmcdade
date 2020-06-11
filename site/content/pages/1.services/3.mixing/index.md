@@ -6,7 +6,7 @@ summary: >
   few tips on the sound you’re looking for and let me do the rest.
 template: service
 example:
-  - /assets/music/other/mixing-example---break-the-mold.mp3
+  - /assets/music/other/mixing-example---break-the-mold-remix.mp3
   - /assets/music/other/In the Valley-Closed Eyes.mp3
 title: Mixing
 fieldset: service
