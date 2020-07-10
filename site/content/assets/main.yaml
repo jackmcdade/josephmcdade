@@ -166,3 +166,7 @@ assets:
     title: Break the Mold (remix)
     genre: heavy-rock
     length: 5:05
+  music/other/promised-land.mp3:
+    title: Promised Land
+    genre: indie-blues
+    length: 3:27
