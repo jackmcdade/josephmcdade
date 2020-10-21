@@ -170,3 +170,23 @@ assets:
     title: Promised Land
     genre: indie-blues
     length: 3:27
+  music/other/a-cry-in-the-moon-s-light-overture.mp3:
+    title: A Cry in the Moons Light Overture
+    genre: score-cinematic
+    length: 3:09
+  music/other/elder-world.mp3:
+    title: Elder World
+    genre: fantasy-cinematic
+    length: 3:37
+  music/other/firmament.mp3:
+    title: Firmament
+    genre: lofi
+    length: 3:59
+  music/other/jungle-champion.mp3:
+    title: Jungle Champion
+    genre: synthwave
+    length: 4:45
+  music/other/on-the-verge-(remix).mp3:
+    title: On the Verge (Remix)
+    genre: ambient-rock
+    length: 3:10
