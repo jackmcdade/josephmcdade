@@ -2,3 +2,5 @@
 local
 node_modules
 .env
+assets/css/*
+assets/js/*
