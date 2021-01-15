@@ -190,3 +190,7 @@ assets:
     title: On the Verge (Remix)
     genre: ambient-rock
     length: 3:10
+  music/other/super-earth.mp3:
+    title: Super Earth
+    genre: ambient-cinematic
+    length: 7:44
